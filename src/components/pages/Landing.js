@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../css/landing.css'
 import OpenSkyLogo from '../../img/logos/opensky.png'
 import PlanespottersLogo from '../../img/logos/planespotters.png'
+import { NavLink } from 'react-router-dom'
 
 const Landing = () => {
 
@@ -37,7 +38,7 @@ const Landing = () => {
                         <h2>welcome</h2>
                         <p className='upper-p'>set your airport (icao)</p>
                         <input type="text" value="" placeholder="e.g. EDDK"/>
-                        <p className='lower-p'>just show me planes, pls!</p>
+                        <NavLink to='/map'><p className='lower-p'>just show me planes, pls!</p></NavLink>
                     </div>
                     <div className="setup-footer">
                         <h3>powered by</h3>

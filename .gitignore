@@ -19,7 +19,6 @@
 .env.development.local
 .env.test.local
 .env.production.local
-.aviate-feature-list.odt
 
 npm-debug.log*
 yarn-debug.log*

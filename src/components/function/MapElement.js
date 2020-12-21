@@ -59,6 +59,10 @@ const getIcon = (iconTrack) => (
 	})
 )
 
+const markerOnClick = () => {
+	alert('click on marker')
+}
+
 	return (
 		<MapContainer className='leaflet-container' center={[50.935173, 6.953101]} zoom={9}>
 			<TileLayer
@@ -71,8 +75,13 @@ const getIcon = (iconTrack) => (
 							key={aircraft[0]}
 							position={[aircraft[6], aircraft[5]]}
 							icon={getIcon(aircraft[10])}
+							eventHandlers={{
+								click: () => {
+								  console.log('marker clicked')
+								},
+							  }}
 						>
-							<Popup>
+						{/* 	<Popup>
 								<h2>Callsign: {aircraft[1]}</h2>
 								{<p onClick={() => fetchPicture(aircraft[0])}>load Image</p>}
 								<img src={picture} alt='none available'></img>
@@ -84,7 +93,7 @@ const getIcon = (iconTrack) => (
 									Altitude: {aircraft[13] ? `${aircraft[13]} m` : 'on ground'}
 								</p>
 								<p>Track: {Math.ceil(aircraft[10])} degrees</p>
-							</Popup>
+							</Popup> */}
 						</Marker>
 				  ))
 				: 'loading traffic'}

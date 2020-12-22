@@ -21,6 +21,11 @@
 	transform: translateY(0%);
 }
 
+.dashboard {
+	width: 70%;
+	margin: 0 auto;
+}
+
 .glareshield {
 	width: 150px;
 	height: 50px;
@@ -34,6 +39,22 @@
 }
 
 .dashboard-data {
+	height: 350px;
 	display: flex;
 	color: #fff;
+}
+
+.general-data {
+	height: 100%;
+	display: flex;
+	gap: 20px;
+	align-items: center;
+}
+
+.aircraft-image {
+}
+
+.current-position-info {
+	display: flex;
+	flex-direction: column;
 }

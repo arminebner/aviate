@@ -7,7 +7,7 @@ import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
 import '../css/mapelement.css'
 
-const fetcher = (...args) => fetch(...args).then((response) => response.json())
+
 
 const MapElement = () => {
 
@@ -15,11 +15,19 @@ const MapElement = () => {
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
 
+	const fetcher = (...args) => {
+		fetch(...args)
+		.then(response => response.json())
+		.then(responseJson => setTraffic(responseJson.states))
+	}
+
 	const url =
 	'https://opensky-network.org/api/states/all?lamin=49.7592&lomin=5.0144&lamax=51.9097&lomax=10.1358'
-	const { data, error } = useSWR(url, { fetcher, refreshInterval: 11000 })
-	const trafficTemp = data && !error ? data.states : []
-	setTraffic(trafficTemp)
+	const { data, error } = useSWR(url, { revalidateOnFocus: false, fetcher, refreshInterval: 11000 })
+	//const traffic = data && !error ? data.states : []
+
+	//bad setState
+	//setTraffic(trafficTemp)
 
  /* 	useEffect(() => {
 		if (selectedTraffic) {

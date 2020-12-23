@@ -4,14 +4,10 @@ import '../css/dashboard.css'
 
 const Dashboard = () => {
 
-   /*  const [ selectedTraffic, setSelectedTraffic ] = useContext(DataContext) */
     const { selectedAircraft, allTraffic } = useContext(DataContext)
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
     const [ picture, setPicture ] = useState('')
-    const [ updated, setUpdated ] = useState([])
-    
-    //compare hex of selected with traffic
 
     useEffect(() => {
 
@@ -33,11 +29,29 @@ const Dashboard = () => {
 
     }, [selectedTraffic])
 
-    useEffect(() => {
+/*     useEffect(() => {
          let updatedTemp = traffic.filter(aircraft => aircraft[0] === selectedTraffic[0])
+         console.log(updatedTemp);
+         
          setUpdated(updatedTemp)
-    }, [traffic])
+    }, [traffic, selectedTraffic]) */
 
+    const returnUpdated = () => {
+        if(selectedTraffic) {
+            let updatedTemp = traffic.filter(aircraft => aircraft[0] === selectedTraffic[0])
+            return updatedTemp
+        }
+        else {
+            let initialTemp = [
+                [1,0],
+                [2,0],
+                [9,0],
+                [10,0],
+                [13,0],
+            ]
+            return initialTemp
+        }
+    }
 
     const closeHandler = () => {
         setSelectedTraffic(false)
@@ -53,12 +67,13 @@ const Dashboard = () => {
                             <img src={picture} alt='none available'></img>
                         </div>
                         <div className="current-position-info">
-                            <h2>Callsign: {updated[0][1]}</h2>
-                            <p>Origin: {updated[0][2]}</p>
-                            <p>Speed Knts: {(updated[0][9] * 1.944).toFixed(2)} Knots</p>
-                            <p>Speed Kmh: {(updated[0][9] * 3.6).toFixed(2)} Km/h</p>
-                            <p>Altitude: {updated[0][13] ? `${updated[0][13]} m` : 'on ground'}</p>
-                            <p>Track: {Math.ceil(updated[0][10])} degrees</p>
+                            <h2>Callsign: {returnUpdated()[0][1]}</h2>
+                            <p>Origin: {returnUpdated()[0][2]}</p>
+                            <p>Speed Knts: {(returnUpdated()[0][9] * 1.944).toFixed(2)} Knots</p>
+                            {/* <p>Speed Kmh: {(selectedTraffic[9] * 3.6).toFixed(2)} Km/h</p> */}
+                            <p>Speed Kmh: {(returnUpdated()[0][9] * 3.6).toFixed(2)} Km/h</p>
+                            <p>Altitude: {returnUpdated()[0][13] ? `${returnUpdated()[0][13]} m` : 'on ground'}</p>
+                            <p>Track: {Math.ceil(returnUpdated()[0][10])} degrees</p>
                         </div>
                     </div>		
                 </div>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import OwnIcon from './OwnIcon'
@@ -41,6 +41,8 @@ const MapElement = () => {
  */
 
 	const getIcon = (iconTrack) => (
+		//if selectedTraffic, make its icon bigger and blue
+		//change said icon or just overlay a bigger icon?
 		L.divIcon({
 			html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
 			className: 'custom-icon',
@@ -59,7 +61,8 @@ const MapElement = () => {
 							key={aircraft[0]}
 							position={[aircraft[6], aircraft[5]]}
 							//change width of icon when a icon is clicked on
-							//give width to getIcon function as a prop
+							//give width to getIcon function as a prop - but then all icons get bigger
+							//transfer id as prop as well to specifiy?
 							icon={getIcon(aircraft[10])}
 							eventHandlers={{
 								click: () => {

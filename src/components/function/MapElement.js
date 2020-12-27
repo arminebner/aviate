@@ -1,7 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import OwnIcon from './OwnIcon'
+import { OwnIcon, OwnSelectedIcon } from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
@@ -14,6 +14,7 @@ const MapElement = () => {
 	const { selectedAircraft, allTraffic } = useContext(DataContext)
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
+	const [ selectedIcon, setSelectedIcon ] = useState(false)
 
 	const fetcher = (...args) => {
 		fetch(...args)
@@ -25,31 +26,32 @@ const MapElement = () => {
 	'https://opensky-network.org/api/states/all?lamin=49.7592&lomin=5.0144&lamax=51.9097&lomax=10.1358'
 	const { data, error } = useSWR(url, { revalidateOnFocus: false, fetcher, refreshInterval: 11000 })
 	//const traffic = data && !error ? data.states : []
+	
 
 	//bad setState
 	//setTraffic(trafficTemp)
 
- /* 	useEffect(() => {
-		if (selectedTraffic) {
-			const updatedTraffic = selectedTraffic
-			console.log(`before update: selectedTraffic: ${updatedTraffic[9]} trafficIndex: ${traffic[index][9]}`);
-			updatedTraffic[9] = traffic[index][9]
-			console.log(`after update ${updatedTraffic[9]}`);
-			setSelectedTraffic(updatedTraffic)
-		}
-	}, [traffic])
- */
+	const getIcon = (iconTrack) => {
+		if (!selectedIcon) {
+			return L.divIcon({
+				html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
+				className: 'custom-icon',
+			})
+		} if (selectedIcon) {
+			console.log(`Icon ID from getIcon: ${selectedIcon.options}`);
+			//selectedIcon.options.icon.options.html = ReactDOMServer.renderToString(<OwnSelectedIcon track={iconTrack} />)
+		}		
+	}
 
-	const getIcon = (iconTrack) => (
-		//if selectedTraffic, make its icon bigger and blue
-		//change said icon or just overlay a bigger icon?
-		L.divIcon({
-			html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
-			className: 'custom-icon',
-		})
-	)
+	//markersLayer[markersIndex].setIcon(myCustomIcon);
+
+	const  getSelectedIcon = (e) => {
+		var icon = e.target
+		console.log(icon); 
+	  }
 
 	return (
+		//onClick funnction here to set setSelectedIcon to false
 		<MapContainer className='leaflet-container' center={[50.935173, 6.953101]} zoom={9}>
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -65,7 +67,9 @@ const MapElement = () => {
 							//transfer id as prop as well to specifiy?
 							icon={getIcon(aircraft[10])}
 							eventHandlers={{
-								click: () => {
+								click: (e) => {
+									getSelectedIcon(e)
+								  setSelectedIcon(e.target)
 								  setSelectedTraffic(aircraft)
 								},
 							  }}

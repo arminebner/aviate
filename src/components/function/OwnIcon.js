@@ -1,7 +1,8 @@
 import React from 'react'
 import airplane from '../../img/Icons/airplane.svg'
+import airplaneSelected from '../../img/Icons/airplane-selected.svg'
 
-const OwnIcon = ({track}) => {
+export const OwnIcon = ({track}) => {
 
 	const renderTrack = {
 		'transform': `rotate(${track}deg)`
@@ -14,4 +15,17 @@ const OwnIcon = ({track}) => {
 	)
 }
 
-export default OwnIcon
+export const OwnSelectedIcon = ({track}) => {
+
+	const renderTrack = {
+		'transform': `rotate(${track}deg)`,
+	}
+
+	return (
+		<div>
+			<img src={airplaneSelected} width='50px' style={renderTrack}  alt='airplane icon'></img>
+		</div>
+	)
+}
+
+//export default OwnIcon

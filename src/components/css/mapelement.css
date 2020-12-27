@@ -2,3 +2,9 @@
 	width: 100%;
 	height: 100vh;
 }
+
+.selected-icon {
+	width: 50px !important;
+	height: 50px !important;
+	color: green;
+}

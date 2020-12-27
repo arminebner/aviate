@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import '../css/landing.css'
@@ -9,7 +9,7 @@ import PlanespottersLogo from '../../img/logos/planespotters.png'
 const Landing = () => {
 
     return (
-        <motion.div exit={{ opacity: 0 }} animate={{ opacity: 1 }} initial={{ opacity: 0 }}>
+        <motion.div exit={{ opacity: 0.1 }} animate={{ opacity: 1 }} initial={{ opacity: 0.1 }}>
             <div className='intro'>
                 <div className="logo-box">
                     <h1>Aviate</h1>

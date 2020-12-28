@@ -1,3 +1,7 @@
+body {
+	background-color: #000;
+}
+
 .intro {
 	background-image: url('../../img/fullHD/landing_1920.jpg');
 	background-position: center center;

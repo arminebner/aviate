@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import '../css/landing.css'
 import OpenSkyLogo from '../../img/logos/opensky.png'
 import PlanespottersLogo from '../../img/logos/planespotters.png'
@@ -16,15 +16,23 @@ const Landing = () => {
         }, 5000);
     }, [])
 
+    const pageTransition = {
+        duration: 1,
+    }
+
     return (
-        <>
+        <AnimatePresence exitBeforeEnter>
             { page.intro &&
-                <motion.div exit={{ opacity: 0.1 }} animate={{ opacity: 1 }} initial={{ opacity: 0.1 }}>
+                <motion.div 
+                key={1}
+                animate={{ opacity: 1 }} 
+                initial={{ opacity: 0.3 }} 
+                exit={{ opacity: 0.1 }} 
+                transition={pageTransition}>
                     <div className='intro'>
                         <div className="logo-box">
                             <h1>Aviate</h1>
                             <h2>...live</h2>
-                            <NavLink to='/login'><p>start</p></NavLink>
                         </div>
                         <div className="landing-footer">
                             <h3>powered by</h3>
@@ -38,7 +46,12 @@ const Landing = () => {
             }
 
             { page.setup &&
-                <motion.div exit={{ opacity: 0.1 }} animate={{ opacity: 1 }} initial={{ opacity: 0.1 }}>
+                <motion.div 
+                    key={2}
+                    animate={{ opacity: 1 }} 
+                    initial={{ opacity: .1 }} 
+                    exit={{ opacity: 0.5 }} 
+                    transition={pageTransition}>
                     <div className="setup">
                         <div className="setup-box">
                             <h2>welcome</h2>
@@ -56,7 +69,7 @@ const Landing = () => {
                     </div>
                 </motion.div>
             }
-       </>
+       </AnimatePresence>
     )
 }
 

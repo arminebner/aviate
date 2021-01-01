@@ -31,24 +31,14 @@ const MapElement = () => {
 	//bad setState
 	//setTraffic(trafficTemp)
 
-	const getIcon = (iconTrack) => {
-		if (!selectedIcon) {
-			return L.divIcon({
-				html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
-				className: 'custom-icon',
-			})
-		} if (selectedIcon) {
-			console.log(`Icon ID from getIcon: ${selectedIcon.options}`);
-			//selectedIcon.options.icon.options.html = ReactDOMServer.renderToString(<OwnSelectedIcon track={iconTrack} />)
-		}		
-	}
-
-	//markersLayer[markersIndex].setIcon(myCustomIcon);
-
-	const  getSelectedIcon = (e) => {
-		var icon = e.target
-		console.log(icon); 
-	  }
+	const getIcon = (iconTrack) => (
+		//if selectedTraffic, make its icon bigger and blue
+		//change said icon or just overlay a bigger icon?
+		L.divIcon({
+			html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
+			className: 'custom-icon',
+		})
+	)
 
 	return (
 		//onClick funnction here to set setSelectedIcon to false
@@ -68,8 +58,6 @@ const MapElement = () => {
 							icon={getIcon(aircraft[10])}
 							eventHandlers={{
 								click: (e) => {
-									getSelectedIcon(e)
-								  setSelectedIcon(e.target)
 								  setSelectedTraffic(aircraft)
 								},
 							  }}

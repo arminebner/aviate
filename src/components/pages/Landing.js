@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import flybySfx from '../../audio/flyby.mp3'
 import '../css/landing.css'
 import OpenSkyLogo from '../../img/logos/opensky.png'
 import PlanespottersLogo from '../../img/logos/planespotters.png'
@@ -13,8 +14,16 @@ const Landing = () => {
     useEffect(() => {
         setTimeout(() => {
             setPage({ intro: false, setup: true})
-        }, 5000);
+        }, 2000);
     }, [])
+
+    const playSound = () => {
+        const audioEl = document.getElementsByClassName("audio-element")[0]
+            audioEl.play()
+            setTimeout(() => {
+                window.location.href = '/map'
+            }, 4000);
+    }
 
     const pageTransition = {
         duration: 1,
@@ -22,6 +31,9 @@ const Landing = () => {
 
     return (
         <AnimatePresence exitBeforeEnter>
+            <audio className="audio-element">
+                <source src={flybySfx}></source>
+            </audio>
             { page.intro &&
                 <motion.div 
                 key={1}
@@ -57,7 +69,7 @@ const Landing = () => {
                             <h2>welcome</h2>
                             <p className='upper-p'>set your airport (icao)</p>
                             <input type="text" value="" placeholder="e.g. EDDK"/>
-                            <NavLink to='/map'><p className='lower-p'>just show me planes, pls!</p></NavLink>
+                            <p className='lower-p' onClick={playSound} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>

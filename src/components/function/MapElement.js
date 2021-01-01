@@ -29,17 +29,6 @@ const MapElement = () => {
 	//bad setState
 	//setTraffic(trafficTemp)
 
- /* 	useEffect(() => {
-		if (selectedTraffic) {
-			const updatedTraffic = selectedTraffic
-			console.log(`before update: selectedTraffic: ${updatedTraffic[9]} trafficIndex: ${traffic[index][9]}`);
-			updatedTraffic[9] = traffic[index][9]
-			console.log(`after update ${updatedTraffic[9]}`);
-			setSelectedTraffic(updatedTraffic)
-		}
-	}, [traffic])
- */
-
 	const getIcon = (iconTrack) => (
 		//if selectedTraffic, make its icon bigger and blue
 		//change said icon or just overlay a bigger icon?

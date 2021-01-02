@@ -7,8 +7,6 @@ import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
 import '../css/mapelement.css'
 
-
-
 const MapElement = () => {
 
 	const { selectedAircraft, allTraffic } = useContext(DataContext)

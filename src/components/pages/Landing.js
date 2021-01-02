@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import airports from 'airport-data'
 import flybySfx from '../../audio/flyby.mp3'
+import planeIcon from '../../img/Icons/airplane.svg'
 import '../css/landing.css'
 import OpenSkyLogo from '../../img/logos/opensky.png'
 import PlanespottersLogo from '../../img/logos/planespotters.png'
@@ -11,6 +12,7 @@ const Landing = () => {
 
     const [ page, setPage ] = useState({ intro: true, setup: false})
     const [ airportInput, setAirportInput ] = useState(null)
+    const [animate, setAnimate] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {
@@ -33,9 +35,15 @@ const Landing = () => {
 
     const airportSet = (e) => {
         e.preventDefault()
-        const filteredData = airports.filter(items => items.icao === airportInput)
-        localStorage.setItem('selectedAirport', JSON.stringify(filteredData))
-        redirect()
+        if(airportInput) {
+            const filteredData = airports.filter(items => items.icao === airportInput)
+            localStorage.setItem('selectedAirport', JSON.stringify(filteredData))
+            setAnimate(true)
+            redirect()
+        }else {
+
+        }
+        
     }
 
     const pageTransition = {
@@ -78,6 +86,9 @@ const Landing = () => {
                     exit={{ opacity: 0.5 }} 
                     transition={pageTransition}>
                     <div className="setup">
+                            <img src={planeIcon} className={`login-icon ${animate ? 'logo-icon-anim' : ''}`} alt='plane icon'></img>
+                            <img src={planeIcon} className={`login-icon2 ${animate ? 'logo-icon-anim2' : ''}`} alt='plane icon'></img>
+                            <img src={planeIcon} className={`login-icon3 ${animate ? 'logo-icon-anim3' : ''}`} alt='plane icon'></img>
                         <div className="setup-box">
                             <h2>welcome</h2>
                             <p className='upper-p'>set your airport (icao)</p>
@@ -85,7 +96,7 @@ const Landing = () => {
                                 <input className='set-airport-input' onChange={airportUserInput} type="text" placeholder="e.g. EDDK"/>
                                 <button className='set-airport-button' onClick={airportSet} type='submit'>set Airport</button>
                             </form>
-                            <p className='lower-p' onClick={redirect} >Just show me planes, pls!</p>
+                            <p className='lower-p' onClick={airportSet} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>
@@ -94,6 +105,7 @@ const Landing = () => {
                                 <img src={PlanespottersLogo} alt="logo from planespotters.net"/>
                             </div>
                         </div>
+
                     </div>
                 </motion.div>
             }

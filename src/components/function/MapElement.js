@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import { OwnIcon, OwnSelectedIcon } from './OwnIcon'
+import { OwnIcon } from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
@@ -14,7 +14,13 @@ const MapElement = () => {
 	const { selectedAircraft, allTraffic } = useContext(DataContext)
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
-	const [ selectedIcon, setSelectedIcon ] = useState(false)
+
+	const selectedAirport = JSON.parse(localStorage.getItem("selectedAirport"));
+	const { icao, latitude, longitude } = selectedAirport[0]
+	const lamin = latitude - 3 
+	const lamax = latitude + 3
+	const lomin = longitude - 6 
+	const lomax = longitude + 6
 
 	const fetcher = (...args) => {
 		fetch(...args)
@@ -23,10 +29,9 @@ const MapElement = () => {
 	}
 
 	const url =
-	'https://opensky-network.org/api/states/all?lamin=49.7592&lomin=5.0144&lamax=51.9097&lomax=10.1358'
+	`https://opensky-network.org/api/states/all?lamin=${lamin}&lomin=${lomin}&lamax=${lamax}&lomax=${lomax}`
 	const { data, error } = useSWR(url, { revalidateOnFocus: false, fetcher, refreshInterval: 11000 })
 	//const traffic = data && !error ? data.states : []
-	
 
 	//bad setState
 	//setTraffic(trafficTemp)
@@ -42,7 +47,8 @@ const MapElement = () => {
 
 	return (
 		//onClick funnction here to set setSelectedIcon to false
-		<MapContainer className='leaflet-container' center={[50.935173, 6.953101]} zoom={9}>
+		<MapContainer className='leaflet-container' center={[latitude, longitude]} zoom={9}>
+			<Marker key={icao} position={[latitude, longitude]} />
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

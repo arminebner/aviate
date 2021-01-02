@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import airports from 'airport-data'
 import flybySfx from '../../audio/flyby.mp3'
 import '../css/landing.css'
 import OpenSkyLogo from '../../img/logos/opensky.png'
@@ -10,6 +10,7 @@ import PlanespottersLogo from '../../img/logos/planespotters.png'
 const Landing = () => {
 
     const [ page, setPage ] = useState({ intro: true, setup: false})
+    const [ airportInput, setAirportInput ] = useState(null)
 
     useEffect(() => {
         setTimeout(() => {
@@ -17,12 +18,24 @@ const Landing = () => {
         }, 2000);
     }, [])
 
-    const playSound = () => {
+    const redirect = () => {
         const audioEl = document.getElementsByClassName("audio-element")[0]
             audioEl.play()
-            setTimeout(() => {
-                window.location.href = '/map'
-            }, 4000);
+        setTimeout(() => {
+            window.location.href = '/map'
+        }, 4000);
+    }
+
+    const airportUserInput = (e) => {
+        const airportTemp = (e.target.value).toUpperCase()
+        setAirportInput(airportTemp)
+    }
+
+    const airportSet = (e) => {
+        e.preventDefault()
+        const filteredData = airports.filter(items => items.icao === airportInput)
+        localStorage.setItem('selectedAirport', JSON.stringify(filteredData))
+        redirect()
     }
 
     const pageTransition = {
@@ -68,8 +81,11 @@ const Landing = () => {
                         <div className="setup-box">
                             <h2>welcome</h2>
                             <p className='upper-p'>set your airport (icao)</p>
-                            <input type="text" value="" placeholder="e.g. EDDK"/>
-                            <p className='lower-p' onClick={playSound} >Just show me planes, pls!</p>
+                            <form className='set-airport-form'>
+                                <input className='set-airport-input' onChange={airportUserInput} type="text" placeholder="e.g. EDDK"/>
+                                <button className='set-airport-button' onClick={airportSet} type='submit'>set Airport</button>
+                            </form>
+                            <p className='lower-p' onClick={redirect} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>

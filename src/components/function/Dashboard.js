@@ -37,10 +37,12 @@ const Dashboard = () => {
     }, [traffic, selectedTraffic]) */
 
     const returnUpdated = () => {
+        //here bugfix for transponder to off-position ((selectedTraffic &&  selectedTraffic[0][1] != undefined or so ))
         if(selectedTraffic) {
             let updatedTemp = traffic.filter(aircraft => aircraft[0] === selectedTraffic[0])
             return updatedTemp
         }
+        //here bugfix for transponder to off-position (elseif (!selectedTraffic || selectedTraffic[0] === undefined ))
         else {
             let initialTemp = [
                 [1,0],
@@ -70,7 +72,6 @@ const Dashboard = () => {
                             <h2>Callsign: {returnUpdated()[0][1]}</h2>
                             <p>Origin: {returnUpdated()[0][2]}</p>
                             <p>Speed Knts: {(returnUpdated()[0][9] * 1.944).toFixed(2)} Knots</p>
-                            {/* <p>Speed Kmh: {(selectedTraffic[9] * 3.6).toFixed(2)} Km/h</p> */}
                             <p>Speed Kmh: {(returnUpdated()[0][9] * 3.6).toFixed(2)} Km/h</p>
                             <p>Altitude: {returnUpdated()[0][13] ? `${returnUpdated()[0][13]} m` : 'on ground'}</p>
                             <p>Track: {Math.ceil(returnUpdated()[0][10])} degrees</p>

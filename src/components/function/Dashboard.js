@@ -29,13 +29,6 @@ const Dashboard = () => {
 
     }, [selectedTraffic])
 
-/*     useEffect(() => {
-         let updatedTemp = traffic.filter(aircraft => aircraft[0] === selectedTraffic[0])
-         console.log(updatedTemp);
-         
-         setUpdated(updatedTemp)
-    }, [traffic, selectedTraffic]) */
-
     const returnUpdated = () => {
         //here bugfix for transponder to off-position ((selectedTraffic &&  selectedTraffic[0][1] != undefined or so ))
         if(selectedTraffic) {

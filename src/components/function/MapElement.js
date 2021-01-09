@@ -13,8 +13,9 @@ const MapElement = () => {
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
 
-	const selectedAirport = JSON.parse(localStorage.getItem("selectedAirport"));
-	const { icao, latitude, longitude } = selectedAirport[0]
+	const selectedLocation = JSON.parse(localStorage.getItem("selectedLocation"));
+	/* const { icao, latitude, longitude } = selectedLocation[0] */
+	const { icao, latitude, longitude } = selectedLocation
 	const lamin = latitude - 3 
 	const lamax = latitude + 3
 	const lomin = longitude - 6 

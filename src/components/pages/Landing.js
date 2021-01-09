@@ -36,15 +36,38 @@ const Landing = () => {
     const airportSet = (e) => {
         e.preventDefault()
         if(airportInput) {
-            const filteredData = airports.filter(items => items.icao === airportInput)
-            localStorage.setItem('selectedAirport', JSON.stringify(filteredData))
+            /* const filteredData = airports.filter(items => items.icao === airportInput) */
+            const [ latitude, longitude ] = airports.filter(items => items.icao === airportInput)
+            localStorage.setItem('selectedLocation', JSON.stringify(latitude, longitude))
             setAnimate(true)
             redirect()
-        }else {
-
-        }
-        
+        }   
     }
+
+    const getGeolocation = () => {
+        if (navigator.geolocation) {
+           navigator.geolocation.getCurrentPosition(location => {
+            console.log(`latitude: ${location.coords.latitude}, longitude: ${location.coords.longitude}`)
+            const position = {
+                latitude: location.coords.latitude, 
+                longitude: location.coords.longitude
+            }
+            localStorage.setItem('selectedLocation', JSON.stringify(position))
+            setAnimate(true)
+            redirect()
+           })
+            }else{
+                alert('could not retrieve geolocation')
+        }     
+    }
+
+ /*    const showPosition = (position) => {
+        console.log(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`)
+        const positionData = 
+        localStorage.setItem('selectedAirport', JSON.stringify())
+        setAnimate(true)
+        redirect()
+    } */
 
     const pageTransition = {
         duration: 1,
@@ -96,7 +119,7 @@ const Landing = () => {
                                 <input className='set-airport-input' onChange={airportUserInput} type="text" placeholder="e.g. EDDK"/>
                                 <button className='set-airport-button' onClick={airportSet} type='submit'>set Airport</button>
                             </form>
-                            <p className='lower-p' onClick={airportSet} >Just show me planes, pls!</p>
+                            <p className='lower-p' onClick={getGeolocation} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>

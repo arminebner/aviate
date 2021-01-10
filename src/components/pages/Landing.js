@@ -12,7 +12,7 @@ const Landing = () => {
 
     const [ page, setPage ] = useState({ intro: true, setup: false})
     const [ airportInput, setAirportInput ] = useState(null)
-    const [animate, setAnimate] = useState(false)
+    const [ animate, setAnimate ] = useState(false)
 
     useEffect(() => {
         setTimeout(() => {

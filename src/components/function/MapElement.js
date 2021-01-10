@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
-import { OwnIcon } from './OwnIcon'
+import { OwnIcon, CustomAirportIcon } from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
@@ -13,9 +13,13 @@ const MapElement = () => {
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
 
+	//setup if ICAO was entered
 	const selectedLocation = JSON.parse(localStorage.getItem("selectedLocation"));
-	/* const { icao, latitude, longitude } = selectedLocation[0] */
-	const { icao, latitude, longitude } = selectedLocation
+	const { latitude, longitude } = selectedLocation
+
+	//get surrounding airports
+	const nearestAirports = JSON.parse(localStorage.getItem('nearestAirports'))
+
 	const lamin = latitude - 3 
 	const lamax = latitude + 3
 	const lomin = longitude - 6 
@@ -44,10 +48,31 @@ const MapElement = () => {
 		})
 	)
 
+	const getAirportIcon = (name) => (
+		//if selectedTraffic, make its icon bigger and blue
+		//change said icon or just overlay a bigger icon?
+		L.divIcon({
+			html: ReactDOMServer.renderToString(<CustomAirportIcon name={name} />),
+			className: 'custom-icon',
+		})
+	)
+	
 	return (
 		//onClick funnction here to set setSelectedIcon to false
 		<MapContainer className='leaflet-container' center={[latitude, longitude]} zoom={9}>
-			<Marker key={icao} position={[latitude, longitude]} />
+			<Marker position={[latitude, longitude]} />
+
+			{nearestAirports
+				?	nearestAirports.map((airport, index) => (
+						<Marker 
+							key={index} 
+							position={[airport.latitude, airport.longitude]}
+							icon={getAirportIcon(airport.name)}
+						/>
+					))
+				:'loading airports'
+			}
+
 			<TileLayer
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'

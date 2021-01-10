@@ -36,38 +36,61 @@ const Landing = () => {
     const airportSet = (e) => {
         e.preventDefault()
         if(airportInput) {
-            /* const filteredData = airports.filter(items => items.icao === airportInput) */
-            const [ latitude, longitude ] = airports.filter(items => items.icao === airportInput)
-            localStorage.setItem('selectedLocation', JSON.stringify(latitude, longitude))
+            const [ location ] = airports.filter(items => items.icao === airportInput)
+            localStorage.setItem('selectedLocation', JSON.stringify(location))
             setAnimate(true)
             redirect()
         }   
     }
 
-    const getGeolocation = () => {
+    const findNearestAirport = () => {
         if (navigator.geolocation) {
-           navigator.geolocation.getCurrentPosition(location => {
-            console.log(`latitude: ${location.coords.latitude}, longitude: ${location.coords.longitude}`)
-            const position = {
-                latitude: location.coords.latitude, 
-                longitude: location.coords.longitude
-            }
-            localStorage.setItem('selectedLocation', JSON.stringify(position))
-            setAnimate(true)
-            redirect()
-           })
+           navigator.geolocation.getCurrentPosition(searchNearestAirport)
+           setAnimate(true)
+           redirect()
             }else{
                 alert('could not retrieve geolocation')
         }     
     }
 
- /*    const showPosition = (position) => {
-        console.log(`latitude: ${position.coords.latitude}, longitude: ${position.coords.longitude}`)
-        const positionData = 
-        localStorage.setItem('selectedAirport', JSON.stringify())
-        setAnimate(true)
-        redirect()
-    } */
+    const searchNearestAirport = (location) => {
+        const position = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude
+        } 
+        localStorage.setItem('selectedLocation', JSON.stringify(position))
+
+        //round numbers to closest integer
+        const roundedLat = Math.round(location.coords.latitude)
+        const roundedLong = Math.round(location.coords.longitude)
+        //console.log(`roundedLat LOCATION: ${roundedLat} roundedLong LOCATION: ${roundedLong}`);
+        
+        //round lat
+        const  roundedLatArr = airports.filter(item => Math.round(item.latitude) === roundedLat)
+        //filter for all possible longs (round, up, down)
+        const  roundedLatArr_roundedLong = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong)
+      /*   const  roundedLatArr_roundedLongUp = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong + 1)
+        const  roundedLatArr_roundedLongDown = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong - 1)
+
+        //round lat up
+        const  roundedLatArrUp = airports.filter(item => Math.round(item.latitude) === roundedLat + 1)
+        //filter for all possible longs (round, up, down)
+        const roundedLatArrUp_roundedLong = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong)
+        const roundedLatArrUp_roundedLongUp = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong + 1)
+        const roundedLatArrUp_roundedLongDown = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong - 1)
+
+        //round lat down
+        const  roundedLatArrDown = airports.filter(item => Math.round(item.latitude) === roundedLat - 1)
+        //filter for all possible longs (round, up, down)
+        const roundedLatArrDown_roundedLong = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong)
+        const roundedLatArrDown_roundedLongUp = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong + 1)
+        const roundedLatArrDown_roundedLongDown = roundedLatArrUp.filter(item => Math.round(item.longitude) === roundedLong - 1)
+
+       const final = [...roundedLatArr_roundedLong, ...roundedLatArr_roundedLongUp, ...roundedLatArr_roundedLongDown, ...roundedLatArrUp_roundedLong, ...roundedLatArrUp_roundedLongUp, ...roundedLatArrUp_roundedLongDown, ...roundedLatArrDown_roundedLong, ...roundedLatArrDown_roundedLongUp, ...roundedLatArrDown_roundedLongDown] */
+
+      // console.log(roundedLatArr_roundedLong);
+       localStorage.setItem('nearestAirports', JSON.stringify(roundedLatArr_roundedLong))
+    }
 
     const pageTransition = {
         duration: 1,
@@ -119,7 +142,7 @@ const Landing = () => {
                                 <input className='set-airport-input' onChange={airportUserInput} type="text" placeholder="e.g. EDDK"/>
                                 <button className='set-airport-button' onClick={airportSet} type='submit'>set Airport</button>
                             </form>
-                            <p className='lower-p' onClick={getGeolocation} >Just show me planes, pls!</p>
+                            <p className='lower-p' onClick={findNearestAirport} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>

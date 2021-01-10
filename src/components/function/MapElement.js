@@ -9,9 +9,10 @@ import '../css/mapelement.css'
 
 const MapElement = () => {
 
-	const { selectedAircraft, allTraffic } = useContext(DataContext)
+	const { selectedAircraft, allTraffic, airportIcons } = useContext(DataContext)
 	const [ selectedTraffic, setSelectedTraffic ] = selectedAircraft
 	const [ traffic, setTraffic ] = allTraffic
+	const [ showAirports, setShowAirports ] = airportIcons
 
 	//setup if ICAO was entered
 	const selectedLocation = JSON.parse(localStorage.getItem("selectedLocation"));
@@ -59,7 +60,7 @@ const MapElement = () => {
 		<MapContainer className='leaflet-container' center={[latitude, longitude]} zoom={9}>
 			<Marker position={[latitude, longitude]} />
 
-			{nearestAirports
+			{showAirports
 				?	nearestAirports.map((airport, index) => (
 						<Marker 
 							key={index} 

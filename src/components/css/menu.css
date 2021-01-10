@@ -1,0 +1,9 @@
+.menu-container {
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: 300px;
+	width: 250px;
+	background-color: rgba(42, 75, 165, 0.822);
+	z-index: 400;
+}

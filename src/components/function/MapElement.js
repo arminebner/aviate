@@ -16,14 +16,13 @@ const MapElement = () => {
 	//setup if ICAO was entered
 	const selectedLocation = JSON.parse(localStorage.getItem("selectedLocation"));
 	const { latitude, longitude } = selectedLocation
-
-	//get surrounding airports
-	const nearestAirports = JSON.parse(localStorage.getItem('nearestAirports'))
-
 	const lamin = latitude - 3 
 	const lamax = latitude + 3
 	const lomin = longitude - 6 
 	const lomax = longitude + 6
+
+	//get surrounding airports
+	const nearestAirports = JSON.parse(localStorage.getItem('nearestAirports'))
 
 	const fetcher = (...args) => {
 		fetch(...args)
@@ -49,8 +48,6 @@ const MapElement = () => {
 	)
 
 	const getAirportIcon = (name) => (
-		//if selectedTraffic, make its icon bigger and blue
-		//change said icon or just overlay a bigger icon?
 		L.divIcon({
 			html: ReactDOMServer.renderToString(<CustomAirportIcon name={name} />),
 			className: 'custom-icon',

@@ -13,6 +13,7 @@ const Landing = () => {
     const [ page, setPage ] = useState({ intro: true, setup: false})
     const [ airportInput, setAirportInput ] = useState(null)
     const [ animate, setAnimate ] = useState(false)
+    localStorage.clear()
 
     useEffect(() => {
         setTimeout(() => {
@@ -38,28 +39,15 @@ const Landing = () => {
         if(airportInput) {
             const [ location ] = airports.filter(items => items.icao === airportInput)
             localStorage.setItem('selectedLocation', JSON.stringify(location))
-            searchNearestAirportICAO(location)
+            findNearestAirports(location)
             setAnimate(true)
             redirect()
         }   
     }
 
-    const searchNearestAirportICAO = (location) => {
-
-        //round numbers to closest integer
-        const roundedLat = Math.round(location.latitude)
-        const roundedLong = Math.round(location.longitude)
-        
-        //round lat
-        const  roundedLatArr = airports.filter(item => Math.round(item.latitude) === roundedLat)
-        //filter for all possible longs (round, up, down)
-        const  roundedLatArr_roundedLong = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong)
-        localStorage.setItem('nearestAirports', JSON.stringify(roundedLatArr_roundedLong))
-    }
-
-    const findNearestAirport = () => {
+    const useGeoPosition = () => {
         if (navigator.geolocation) {
-           navigator.geolocation.getCurrentPosition(searchNearestAirportGeo, setLocation)
+           navigator.geolocation.getCurrentPosition(convertLocation)
            setAnimate(true)
            redirect()
             }else{
@@ -67,27 +55,26 @@ const Landing = () => {
         }     
     }
 
-    const setLocation = (location) => {
+    const convertLocation = (location) => {
         const position = {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         } 
+        findNearestAirports(position)
         localStorage.setItem('selectedLocation', JSON.stringify(position))
     }
 
-    const searchNearestAirportGeo = (location) => {
-
+    const findNearestAirports = (location) => {
         //round numbers to closest integer
-        const roundedLat = Math.round(location.coords.latitude)
-        const roundedLong = Math.round(location.coords.longitude)
+        const roundedLat = Math.round(location.latitude)
+        const roundedLong = Math.round(location.longitude)
         
-        //round lat
+        //round lat and filter with rounded long
         const  roundedLatArr = airports.filter(item => Math.round(item.latitude) === roundedLat)
-        //filter for all possible longs (round, up, down)
         const  roundedLatArr_roundedLong = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong)
         localStorage.setItem('nearestAirports', JSON.stringify(roundedLatArr_roundedLong))
-
-      /*   const  roundedLatArr_roundedLongUp = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong + 1)
+        
+              /*   const  roundedLatArr_roundedLongUp = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong + 1)
         const  roundedLatArr_roundedLongDown = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong - 1)
 
         //round lat up
@@ -107,7 +94,6 @@ const Landing = () => {
        const final = [...roundedLatArr_roundedLong, ...roundedLatArr_roundedLongUp, ...roundedLatArr_roundedLongDown, ...roundedLatArrUp_roundedLong, ...roundedLatArrUp_roundedLongUp, ...roundedLatArrUp_roundedLongDown, ...roundedLatArrDown_roundedLong, ...roundedLatArrDown_roundedLongUp, ...roundedLatArrDown_roundedLongDown] */
 
       // console.log(roundedLatArr_roundedLong);
-       
     }
 
     const pageTransition = {
@@ -160,7 +146,7 @@ const Landing = () => {
                                 <input className='set-airport-input' onChange={airportUserInput} type="text" placeholder="e.g. EDDK"/>
                                 <button className='set-airport-button' onClick={airportSet} type='submit'>set Airport</button>
                             </form>
-                            <p className='lower-p' onClick={findNearestAirport} >Just show me planes, pls!</p>
+                            <p className='lower-p' onClick={useGeoPosition} >Just show me planes, pls!</p>
                         </div>
                         <div className="setup-footer">
                             <h3>powered by</h3>

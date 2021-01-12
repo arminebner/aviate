@@ -12,9 +12,9 @@ const Menu = () => {
 
     return (
         <div className='menu-container'>
-            <div className='menu-item toggle-airports' onClick={toggleAirports}>showAirports</div>
+            <div className='menu-item toggle-airports' onClick={toggleAirports}>Toggle Airports</div>
             <div className='menu-item new-location'>
-                <input className='menu-item location-input' type='text' placeholder='change airport to'></input>
+                <input className='menu-item location-input' type='text' placeholder='set airport to (ICAO)'></input>
                 <div className='menu-item location-button' onClick={toggleAirports}>setNewLocation</div>
             </div>
         </div>

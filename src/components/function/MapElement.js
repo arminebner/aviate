@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 import { OwnIcon, CustomAirportIcon } from './OwnIcon'
@@ -14,7 +14,7 @@ const MapElement = () => {
 	const [ traffic, setTraffic ] = allTraffic
 	const [ showAirports, setShowAirports ] = airportIcons
 
-	//setup if ICAO was entered
+	//setLocation (map-center)
 	const selectedLocation = JSON.parse(localStorage.getItem("selectedLocation"));
 	const { latitude, longitude } = selectedLocation
 	const lamin = latitude - 3 

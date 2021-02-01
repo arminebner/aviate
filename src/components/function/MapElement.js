@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { MapContainer, Marker, TileLayer, useMap } from 'react-leaflet'
+import {
+	MapContainer,
+	Marker,
+	TileLayer,
+	useMap,
+	LayersControl,
+} from 'react-leaflet'
 import { OwnIcon, CustomAirportIcon } from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
@@ -103,6 +109,8 @@ const MapElement = () => {
 		return null
 	}
 
+	let temperature = `http://maps.openweathermap.org/maps/2.0/weather/TA2/{z}/{x}/{y}?date=1527811200&opacity=0.9&fill_bound=true&palette=0:FF0000;10:00FF00;20:0000FF&appid=${process.env.REACT_APP_OWM_API_KEY}`
+
 	return (
 		<>
 			{location && nearestAirports ? (
@@ -115,6 +123,47 @@ const MapElement = () => {
 					<Marker
 						position={[location.latitude, location.longitude]}
 					/>
+					<LayersControl name='Weather Layers' position='topleft'>
+						<TileLayer
+							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+							url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+						/>
+						<LayersControl.Overlay name='Clouds'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Precipitation'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Barometric Pressure'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Pressure Conture'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Wind Speed'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Temperature'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+						<LayersControl.Overlay name='Rain'>
+							<TileLayer
+								url={`https://tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
+							/>
+						</LayersControl.Overlay>
+					</LayersControl>
 
 					{showAirports
 						? nearestAirports.map((airport, index) => (
@@ -129,10 +178,6 @@ const MapElement = () => {
 						  ))
 						: 'loading airports'}
 
-					<TileLayer
-						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-						url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-					/>
 					{traffic
 						? traffic.map(aircraft => (
 								<Marker

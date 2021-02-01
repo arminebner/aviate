@@ -7,12 +7,8 @@ const UserSchema = new Schema({
       type: String,
       required: true
   },
-  favorite_airplanes: {
-      type: Array
-  },
-  favorite_airports: {
-      type: Array
-  },
+  favorite_airplanes: Array, 
+  favorite_airports: Array
 })
 
 module.exports = mongoose.model('users', UserSchema)

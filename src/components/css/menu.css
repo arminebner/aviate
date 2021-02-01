@@ -18,17 +18,21 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #fff;
 	border: 2px solid #fff;
 }
 
 .toggle-airports {
 	height: 50px;
 	cursor: pointer;
+	color: #fff;
 }
 
 .new-location {
 	flex-direction: column;
+}
+
+.set-airport-form-menu {
+	width: 100%;
 }
 
 .location-input {
@@ -39,5 +43,4 @@
 .location-button {
 	height: 50px;
 	cursor: pointer;
-	border: none;
 }

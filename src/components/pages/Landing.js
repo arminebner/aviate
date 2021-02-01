@@ -13,7 +13,6 @@ const Landing = () => {
     const [ page, setPage ] = useState({ intro: true, setup: false})
     const [ airportInput, setAirportInput ] = useState(null)
     const [ animate, setAnimate ] = useState(false)
-    localStorage.clear()
 
     useEffect(() => {
         setTimeout(() => {
@@ -38,6 +37,8 @@ const Landing = () => {
         e.preventDefault()
         if(airportInput) {
             const [ location ] = airports.filter(items => items.icao === airportInput)
+            console.log(location);
+            
             localStorage.setItem('selectedLocation', JSON.stringify(location))
             findNearestAirports(location)
             setAnimate(true)
@@ -47,7 +48,7 @@ const Landing = () => {
 
     const useGeoPosition = () => {
         if (navigator.geolocation) {
-           navigator.geolocation.getCurrentPosition(convertLocation)
+           navigator.geolocation.getCurrentPosition(convertGeoPosition)
            setAnimate(true)
            redirect()
             }else{
@@ -55,13 +56,13 @@ const Landing = () => {
         }     
     }
 
-    const convertLocation = (location) => {
+    const convertGeoPosition = (location) => {
         const position = {
             latitude: location.coords.latitude,
             longitude: location.coords.longitude
         } 
-        findNearestAirports(position)
         localStorage.setItem('selectedLocation', JSON.stringify(position))
+        findNearestAirports(position)
     }
 
     const findNearestAirports = (location) => {
@@ -74,7 +75,7 @@ const Landing = () => {
         const  roundedLatArr_roundedLong = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong)
         localStorage.setItem('nearestAirports', JSON.stringify(roundedLatArr_roundedLong))
         
-              /*   const  roundedLatArr_roundedLongUp = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong + 1)
+        /*   const  roundedLatArr_roundedLongUp = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong + 1)
         const  roundedLatArr_roundedLongDown = roundedLatArr.filter(item => Math.round(item.longitude) === roundedLong - 1)
 
         //round lat up

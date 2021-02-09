@@ -1,0 +1,18 @@
+.weather-container {
+	position: absolute;
+	top: 30vh;
+	left: 0;
+	z-index: 1000;
+	border: 2px solid #000;
+	border-radius: 2px;
+}
+
+.meteo-link {
+	background-color: #000;
+	display: flex;
+	justify-content: center;
+}
+
+.meteo-link a {
+	color: #fff;
+}

@@ -1,0 +1,27 @@
+.icon-container {
+	width: 100px;
+	height: 130px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	color: #fff;
+	background-color: rgba(0, 0, 0, 0.801);
+	font-family: 'Bebas';
+	font-size: 1rem;
+	border-radius: 2px;
+	box-shadow: 2px 2px 5px #000;
+}
+
+.icon-airport {
+	padding: 5px;
+}
+
+.icon-name {
+	padding: 5px;
+	text-align: center;
+}
+
+.line-separator {
+	width: 85%;
+}

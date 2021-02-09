@@ -11,6 +11,7 @@ import { OwnIcon, CustomAirportIcon } from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
+import Weather from '../function/Weather'
 import '../css/mapelement.css'
 
 const MapElement = () => {
@@ -22,6 +23,8 @@ const MapElement = () => {
 		nearest,
 		change,
 		aircraftImage,
+		winddata,
+		selectedAirport,
 	} = useContext(DataContext)
 	const [selectedTraffic, setSelectedTraffic] = selectedAircraft
 	const [traffic, setTraffic] = allTraffic
@@ -35,6 +38,8 @@ const MapElement = () => {
 	const [lomin, setLomin] = useState()
 	const [lomax, setLomax] = useState()
 	const [firstPaint, setFirstPaint] = useState(true)
+	const [showWindMap, setShowWindMap] = winddata
+	const [airport, setAirport] = selectedAirport
 
 	const setApiBorders = location => {
 		setLamin(location.latitude - 3)
@@ -109,8 +114,6 @@ const MapElement = () => {
 		return null
 	}
 
-	let temperature = `http://maps.openweathermap.org/maps/2.0/weather/TA2/{z}/{x}/{y}?date=1527811200&opacity=0.9&fill_bound=true&palette=0:FF0000;10:00FF00;20:0000FF&appid=${process.env.REACT_APP_OWM_API_KEY}`
-
 	return (
 		<>
 			{location && nearestAirports ? (
@@ -118,65 +121,16 @@ const MapElement = () => {
 				<MapContainer
 					className='leaflet-container'
 					center={[location.latitude, location.longitude]}
-					zoom={10}>
+					zoom={12}>
 					<ChangeCenter />
 					<Marker
 						position={[location.latitude, location.longitude]}
 					/>
-					<LayersControl name='Weather Layers' position='topleft'>
-						<TileLayer
-							attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-							url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-						/>
-						<LayersControl.Overlay name='Clouds'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/clouds_cls/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Precipitation'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Barometric Pressure'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Pressure Conture'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Wind Speed'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Temperature'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-						<LayersControl.Overlay name='Rain'>
-							<TileLayer
-								url={`https://tile.openweathermap.org/map/rain_cls/{z}/{x}/{y}.png?appid=${process.env.REACT_APP_OWM_API_KEY}`}
-							/>
-						</LayersControl.Overlay>
-					</LayersControl>
 
-					{showAirports
-						? nearestAirports.map((airport, index) => (
-								<Marker
-									key={index}
-									position={[
-										airport.latitude,
-										airport.longitude,
-									]}
-									icon={getAirportIcon(airport.name)}
-								/>
-						  ))
-						: 'loading airports'}
+					<TileLayer
+						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+						url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+					/>
 
 					{traffic
 						? traffic.map(aircraft => (
@@ -189,6 +143,7 @@ const MapElement = () => {
 									icon={getIcon(aircraft[10])}
 									eventHandlers={{
 										click: e => {
+											setAirport(false)
 											setPicture(null)
 											setSelectedTraffic(aircraft)
 										},
@@ -196,6 +151,25 @@ const MapElement = () => {
 								/>
 						  ))
 						: 'loading traffic'}
+					{showAirports
+						? nearestAirports.map((airport, index) => (
+								<Marker
+									key={index}
+									position={[
+										airport.latitude,
+										airport.longitude,
+									]}
+									icon={getAirportIcon(airport.name)}
+									eventHandlers={{
+										click: e => {
+											setSelectedTraffic(false)
+											setAirport(airport)
+										},
+									}}
+								/>
+						  ))
+						: 'loading airports'}
+					{showWindMap ? <Weather /> : ''}
 				</MapContainer>
 			) : (
 				'loading'

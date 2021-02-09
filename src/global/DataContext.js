@@ -11,6 +11,7 @@ export const DataProvider = props => {
 	const [nearestAirports, setNearestAirports] = useState(null)
 	const [locationChanged, setLocationChanged] = useState(false)
 	const [picture, setPicture] = useState(null)
+	const [showWindMap, setShowWindMap] = useState(false)
 
 	return (
 		<DataContext.Provider
@@ -23,6 +24,7 @@ export const DataProvider = props => {
 				nearest: [nearestAirports, setNearestAirports],
 				change: [locationChanged, setLocationChanged],
 				aircraftImage: [picture, setPicture],
+				winddata: [showWindMap, setShowWindMap],
 			}}>
 			{props.children}
 		</DataContext.Provider>

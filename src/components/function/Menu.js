@@ -4,17 +4,19 @@ import { DataContext } from '../../global/DataContext'
 import '../css/menu.css'
 
 const Menu = () => {
-	const { airportIcons, newLocation, nearest, change } = useContext(
+	const { airportIcons, newLocation, nearest, change, winddata } = useContext(
 		DataContext
 	)
 	const [showAirports, setShowAirports] = airportIcons
 	const [location, setLocation] = newLocation
 	const [nearestAirport, setNearestAirport] = nearest
 	const [locationChanged, setLocationChanged] = change
+	const [showWindMap, setShowWindMap] = winddata
 
 	const [airportInput, setAirportInput] = useState(null)
 
 	const toggleAirports = () => setShowAirports(!showAirports)
+	const toggleWindMap = () => setShowWindMap(!showWindMap)
 
 	const airportUserInput = e => {
 		const airportTemp = e.target.value.toUpperCase()
@@ -73,6 +75,9 @@ const Menu = () => {
 		<div className='menu-container'>
 			<div className='menu-item toggle-airports' onClick={toggleAirports}>
 				Toggle Airports
+			</div>
+			<div className='menu-item toggle-windmap' onClick={toggleWindMap}>
+				Toggle Windmap
 			</div>
 			<div className='menu-item new-location'>
 				<form className='set-airport-form-menu'>

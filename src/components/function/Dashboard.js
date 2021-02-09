@@ -64,7 +64,9 @@ const Dashboard = () => {
 			className={`dashboard-container ${
 				selectedTraffic ? 'showing' : ''
 			}`}>
-			<div onClick={closeHandler} className='glareshield'>
+			<div
+				onClick={closeHandler}
+				className={`${selectedTraffic ? 'glareshield' : ''}`}>
 				close
 			</div>
 			<div className='dashboard'>

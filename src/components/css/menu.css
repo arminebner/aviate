@@ -37,6 +37,13 @@
 	border-radius: 2px;
 }
 
+.toggle-compass {
+	height: 50px;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 2px;
+}
+
 .new-location {
 	flex-direction: column;
 }

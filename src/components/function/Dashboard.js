@@ -1,14 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { DataContext } from '../../global/DataContext'
+import airports from 'airport-data'
 import '../css/dashboard.css'
 
 const Dashboard = () => {
-	const { selectedAircraft, allTraffic, aircraftImage } = useContext(
-		DataContext
-	)
+	const {
+		selectedAircraft,
+		allTraffic,
+		aircraftImage,
+		newLocation,
+		nearest,
+		change,
+		followMode,
+		history,
+	} = useContext(DataContext)
 	const [selectedTraffic, setSelectedTraffic] = selectedAircraft
 	const [traffic, setTraffic] = allTraffic
 	const [picture, setPicture] = aircraftImage
+	const [location, setLocation] = newLocation
+	const [nearestAirport, setNearestAirport] = nearest
+	const [locationChanged, setLocationChanged] = change
+	const [follow, setFollow] = followMode
+	const [flightHistory, setFlightHistory] = history
 
 	useEffect(() => {
 		let myHeaders = new Headers()
@@ -56,8 +69,54 @@ const Dashboard = () => {
 
 	const closeHandler = () => {
 		setSelectedTraffic(false)
+		setFollow(false)
 		//setPicture(null) to placeholder-image
 	}
+
+	const fetchHistory = hexCode => {
+		let begin = Math.floor(new Date().getTime() / 1000.0) - 259200
+		let end = Math.floor(new Date().getTime() / 1000.0)
+		console.log('getHistory')
+		console.log(hexCode)
+
+		fetch(
+			`https://opensky-network.org/api/flights/aircraft?icao24=${hexCode}&begin=${begin}&end=${end}`
+		)
+			.then(result => result.json())
+			.then(resJson => setFlightHistory(resJson))
+			.catch(error => console.log('error', error))
+	}
+
+	const changeLocation = newDest => {
+		closeHandler()
+		const [location] = airports.filter(items => items.icao === newDest)
+		setLocation(location)
+		setLocationChanged(true)
+		findNearestAirports(location)
+	}
+
+	const findNearestAirports = location => {
+		const roundedLat = Math.round(location.latitude)
+		const roundedLong = Math.round(location.longitude)
+		const roundedLatArr = airports.filter(
+			item => Math.round(item.latitude) === roundedLat
+		)
+		const roundedLatArr_roundedLong = roundedLatArr.filter(
+			item => Math.round(item.longitude) === roundedLong
+		)
+		setNearestAirport(roundedLatArr_roundedLong)
+	}
+
+	useEffect(() => {
+		if (follow) {
+			const location = {
+				latitude: returnUpdated()[0][6],
+				longitude: returnUpdated()[0][5],
+			}
+			setLocation(location)
+			setLocationChanged(true)
+		}
+	}, [traffic])
 
 	return (
 		<div
@@ -75,29 +134,110 @@ const Dashboard = () => {
 						<div className='aircraft-image'>
 							<img src={picture} alt='none available'></img>
 						</div>
+						{follow ? (
+							<p
+								onClick={e => setFollow(false)}
+								className='unfollow'>
+								UNFOLLOW
+							</p>
+						) : (
+							<p
+								onClick={e => setFollow(true)}
+								className='follow-me'>
+								FOLLOW ME!
+							</p>
+						)}
 						<div className='current-position-info'>
-							<h2>Callsign: {returnUpdated()[0][1]}</h2>
-							<p>Origin: {returnUpdated()[0][2]}</p>
 							<p>
-								Speed Knts:{' '}
+								<span className='current-aircraft-info'>
+									Callsign:
+								</span>{' '}
+								{returnUpdated()[0][1]}
+							</p>
+							<p>
+								<span className='current-aircraft-info'>
+									Origin:{' '}
+								</span>
+								{returnUpdated()[0][2]}
+							</p>
+							<p>
+								<span className='current-aircraft-info'>
+									Speed Knts:{' '}
+								</span>{' '}
 								{(returnUpdated()[0][9] * 1.944).toFixed(2)}{' '}
 								Knots
 							</p>
 							<p>
-								Speed Kmh:{' '}
+								<span className='current-aircraft-info'>
+									Speed Kmh:{' '}
+								</span>{' '}
 								{(returnUpdated()[0][9] * 3.6).toFixed(2)} Km/h
 							</p>
 							<p>
-								Altitude:{' '}
+								<span className='current-aircraft-info'>
+									Altitude:{' '}
+								</span>{' '}
 								{returnUpdated()[0][13]
 									? `${returnUpdated()[0][13]} m`
 									: 'on ground'}
 							</p>
 							<p>
-								Track: {Math.ceil(returnUpdated()[0][10])}{' '}
-								degrees
+								<span className='current-aircraft-info'>
+									Track:{' '}
+								</span>
+								{Math.ceil(returnUpdated()[0][10])} degrees
 							</p>
 						</div>
+					</div>
+					<div className='flight-history'>
+						<p
+							className='fetch-history'
+							onClick={e => fetchHistory(returnUpdated()[0][0])}>
+							Flight-History (last 3 days):
+						</p>
+						{flightHistory.map(flight => (
+							<div className='flights'>
+								<div className='date-location'>
+									<p>
+										FROM:{' '}
+										<span
+											onClick={e =>
+												changeLocation(
+													flight.estDepartureAirport
+												)
+											}
+											className='location'>
+											{flight.estDepartureAirport}
+										</span>
+									</p>
+									<p>
+										@
+										{new Date(
+											flight.firstSeen * 1000
+										).toLocaleDateString()}
+									</p>
+								</div>
+								<div className='date-location'>
+									<p>
+										TO:{' '}
+										<span
+											onClick={e =>
+												changeLocation(
+													flight.estArrivalAirport
+												)
+											}
+											className='location'>
+											{flight.estArrivalAirport}
+										</span>
+									</p>
+									<p>
+										{new Date(
+											flight.lastSeen * 1000
+										).toLocaleDateString()}
+									</p>
+								</div>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

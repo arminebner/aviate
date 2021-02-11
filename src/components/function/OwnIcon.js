@@ -3,6 +3,7 @@ import '../css/own-icon.css'
 import airplane from '../../img/Icons/airplane.svg'
 import airplaneSelected from '../../img/Icons/airplane-selected.svg'
 import airportIcon from '../../img/Icons/airport2.svg'
+import compassRose from '../../img/Icons/compass_360.svg'
 
 export const OwnIcon = ({ track }) => {
 	const renderTrack = {
@@ -29,7 +30,7 @@ export const OwnSelectedIcon = ({ track }) => {
 		<div>
 			<img
 				src={airplaneSelected}
-				width='50px'
+				width='100px'
 				style={renderTrack}
 				alt='airplane icon'></img>
 		</div>
@@ -46,6 +47,17 @@ export const CustomAirportIcon = ({ name }) => {
 				alt='airport icon'></img>
 			<hr className='line-separator' />
 			<div className='icon-name'>{name}</div>
+		</div>
+	)
+}
+
+export const CompassRose = () => {
+	return (
+		<div>
+			<img
+				className='compass-rose'
+				src={compassRose}
+				alt='airport icon'></img>
 		</div>
 	)
 }

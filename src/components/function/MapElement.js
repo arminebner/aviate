@@ -6,8 +6,15 @@ import {
 	TileLayer,
 	useMap,
 	LayersControl,
+	CircleMarker,
+	Circle,
 } from 'react-leaflet'
-import { OwnIcon, CustomAirportIcon } from './OwnIcon'
+import {
+	OwnIcon,
+	OwnSelectedIcon,
+	CustomAirportIcon,
+	CompassRose,
+} from './OwnIcon'
 import * as L from 'leaflet'
 import useSWR from 'swr'
 import { DataContext } from '../../global/DataContext'
@@ -25,6 +32,11 @@ const MapElement = () => {
 		aircraftImage,
 		winddata,
 		selectedAirport,
+		followMode,
+		history,
+		compass,
+		departures,
+		arrivals,
 	} = useContext(DataContext)
 	const [selectedTraffic, setSelectedTraffic] = selectedAircraft
 	const [traffic, setTraffic] = allTraffic
@@ -40,6 +52,12 @@ const MapElement = () => {
 	const [firstPaint, setFirstPaint] = useState(true)
 	const [showWindMap, setShowWindMap] = winddata
 	const [airport, setAirport] = selectedAirport
+	const [selected, setSelected] = useState(false)
+	const [follow, setFollow] = followMode
+	const [flightHistory, setFlightHistory] = history
+	const [showCompass, setShowCompass] = compass
+	const [depHistory, setDepHistory] = departures
+	const [arrHistory, setArrHistory] = arrivals
 
 	const setApiBorders = location => {
 		setLamin(location.latitude - 3)
@@ -53,21 +71,13 @@ const MapElement = () => {
 		const selectedLocation = JSON.parse(
 			localStorage.getItem('selectedLocation')
 		)
-		//const { latitude, longitude } = selectedLocation
 		setLocation(selectedLocation)
-		console.log('set location state')
-		//set borders for api call to open-sky
 		setApiBorders(selectedLocation)
-		// setLamin(latitude - 3)
-		// setLamax(latitude + 3)
-		// setLomin(longitude - 3)
-		// setLomax(longitude + 3)
 		//get surrounding airports from local storage
 		const nearestAirports = JSON.parse(
 			localStorage.getItem('nearestAirports')
 		)
 		setNearestAirports(nearestAirports)
-		console.log('set nearest state')
 		setFirstPaint(false)
 	}
 
@@ -81,16 +91,10 @@ const MapElement = () => {
 	const { data, error } = useSWR(url, {
 		revalidateOnFocus: false,
 		fetcher,
-		refreshInterval: 11000,
+		refreshInterval: 25000,
 	})
-	//const traffic = data && !error ? data.states : []
-
-	//bad setState
-	//setTraffic(trafficTemp)
 
 	const getIcon = iconTrack =>
-		//if selectedTraffic, make its icon bigger and blue
-		//change said icon or just overlay a bigger icon?
 		L.divIcon({
 			html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
 			className: 'custom-icon',
@@ -104,10 +108,16 @@ const MapElement = () => {
 			className: 'custom-icon',
 		})
 
+	const getCompass = () =>
+		L.divIcon({
+			html: ReactDOMServer.renderToString(<CompassRose />),
+			className: 'custom-icon',
+		})
+
 	function ChangeCenter() {
 		const map = useMap()
 		if (locationChanged) {
-			map.setView([location.latitude, location.longitude], 10)
+			map.setView([location.latitude, location.longitude])
 			setApiBorders(location)
 			setLocationChanged(false)
 		}
@@ -123,10 +133,24 @@ const MapElement = () => {
 					center={[location.latitude, location.longitude]}
 					zoom={12}>
 					<ChangeCenter />
-					<Marker
-						position={[location.latitude, location.longitude]}
-					/>
-
+					{follow ? (
+						<CircleMarker
+							center={[location.latitude, location.longitude]}
+							radius={50}
+						/>
+					) : (
+						<Marker
+							position={[location.latitude, location.longitude]}
+						/>
+					)}
+					{showCompass ? (
+						<Marker
+							position={[location.latitude, location.longitude]}
+							icon={getCompass()}
+						/>
+					) : (
+						''
+					)}
 					<TileLayer
 						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 						url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -143,9 +167,11 @@ const MapElement = () => {
 									icon={getIcon(aircraft[10])}
 									eventHandlers={{
 										click: e => {
+											setFlightHistory([])
 											setAirport(false)
 											setPicture(null)
 											setSelectedTraffic(aircraft)
+											setSelected(true)
 										},
 									}}
 								/>
@@ -162,6 +188,8 @@ const MapElement = () => {
 									icon={getAirportIcon(airport.name)}
 									eventHandlers={{
 										click: e => {
+											setArrHistory([])
+											setDepHistory([])
 											setSelectedTraffic(false)
 											setAirport(airport)
 										},

@@ -6,12 +6,24 @@ export const DataProvider = props => {
 	const [selectedTraffic, setSelectedTraffic] = useState(false)
 	const [traffic, setTraffic] = useState([])
 	const [airport, setAirport] = useState('')
-	const [showAirports, setShowAirports] = useState(true)
+	const [showAirports, setShowAirports] = useState(false)
 	const [location, setLocation] = useState(null)
 	const [nearestAirports, setNearestAirports] = useState(null)
 	const [locationChanged, setLocationChanged] = useState(false)
 	const [picture, setPicture] = useState(null)
 	const [showWindMap, setShowWindMap] = useState(false)
+	const [follow, setFollow] = useState(false)
+	const [showCompass, setShowCompass] = useState(false)
+	const [depHistory, setDepHistory] = useState([])
+	const [arrHistory, setArrHistory] = useState([])
+	const [flightHistory, setFlightHistory] = useState([
+		{
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'EDDK',
+			estArrivalAirport: 'EHAM',
+		},
+	])
 
 	return (
 		<DataContext.Provider
@@ -25,6 +37,11 @@ export const DataProvider = props => {
 				change: [locationChanged, setLocationChanged],
 				aircraftImage: [picture, setPicture],
 				winddata: [showWindMap, setShowWindMap],
+				followMode: [follow, setFollow],
+				history: [flightHistory, setFlightHistory],
+				compass: [showCompass, setShowCompass],
+				departures: [depHistory, setDepHistory],
+				arrivals: [arrHistory, setArrHistory],
 			}}>
 			{props.children}
 		</DataContext.Provider>

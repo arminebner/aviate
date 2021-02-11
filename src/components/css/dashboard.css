@@ -61,7 +61,52 @@
 .aircraft-image {
 }
 
+.follow-me {
+	cursor: pointer;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+	color: green;
+}
+
+.unfollow {
+	cursor: pointer;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+	color: red;
+}
+
 .current-position-info {
 	display: flex;
 	flex-direction: column;
+}
+
+.current-aircraft-info {
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+}
+
+.flight-history {
+	display: flex;
+	flex-direction: column;
+}
+
+.fetch-history {
+	cursor: pointer;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+}
+
+.flights {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 1rem;
+	text-align: center;
+}
+
+.date-location {
+}
+
+.location {
+	cursor: pointer;
 }

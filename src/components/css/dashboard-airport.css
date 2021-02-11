@@ -31,7 +31,8 @@
 	width: 150px;
 	height: 50px;
 	position: absolute;
-	left: calc(50vw + 70px);
+	left: 50%;
+	transform: translate(-50%);
 	bottom: 100%;
 	background-color: rgba(0, 0, 0, 0.9);
 	cursor: pointer;
@@ -60,7 +61,32 @@
 .aircraft-image {
 }
 
+.current-weather {
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+}
+
 .current-airport-info {
 	display: flex;
 	flex-direction: column;
+}
+
+.fetch-history {
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+}
+
+.current-details {
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+}
+
+.arrival-history {
+	height: 300px;
+	overflow: auto;
+}
+
+.departure-history {
+	height: 300px;
+	overflow: auto;
 }

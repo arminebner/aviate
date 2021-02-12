@@ -22,13 +22,6 @@ const DashboardAirport = () => {
 	const [locationChanged, setLocationChanged] = change
 
 	useEffect(() => {
-		// fetch(
-		// 	`https://opensky-network.org/api/flights/arrival?airport=EDDF&begin=1612861658&end=1612871659`
-		// )
-		// 	.then(result => console.log(result))
-		// 	.then(resJson => console.log(resJson))
-		// 	.catch(error => console.log('error', error))
-
 		const fetchWeather = airport => {
 			let requestOptions = {
 				method: 'GET',
@@ -88,8 +81,13 @@ const DashboardAirport = () => {
 		console.log('getArrHistory')
 		console.log(icao)
 
+		const header = {
+			Authorization: `Basic ${btoa(process.env.REACT_APP_OPEN_SKY)}`,
+		}
+
 		fetch(
-			`https://opensky-network.org/api/flights/arrival?airport=${icao}&begin=${begin}&end=${end}`
+			`https://opensky-network.org/api/flights/arrival?airport=${icao}&begin=${begin}&end=${end}`,
+			header
 		)
 			.then(result => result.json())
 			.then(resJson => setArrHistory(resJson))
@@ -102,8 +100,13 @@ const DashboardAirport = () => {
 		console.log('getDepHistory')
 		console.log(icao)
 
+		const header = {
+			Authorization: `Basic ${btoa(process.env.REACT_APP_OPEN_SKY)}`,
+		}
+
 		fetch(
-			`https://opensky-network.org/api/flights/departure?airport=${icao}&begin=${begin}&end=${end}`
+			`https://opensky-network.org/api/flights/departure?airport=${icao}&begin=${begin}&end=${end}`,
+			header
 		)
 			.then(result => result.json())
 			.then(resJson => setDepHistory(resJson))
@@ -142,8 +145,8 @@ const DashboardAirport = () => {
 					<div className='general-data2'>
 						<div className='current-airport-info'>
 							<p>
-								<span className='current-details'>
-									Current Airport:
+								<span className='current-details-headline'>
+									Current Airport
 								</span>
 							</p>
 							<p>
@@ -181,15 +184,15 @@ const DashboardAirport = () => {
 						</div>
 						<div className='current-airport-weather'>
 							<p>
-								<span className='current-details'>
-									Current Weather:{' '}
+								<span className='current-details-headline'>
+									Current Weather{' '}
 								</span>
 							</p>
 							<img
 								src={`http://openweathermap.org/img/wn/${
 									returnUpdated().weather[0].icon
 								}@2x.png`}
-								alt=''
+								alt='weather-indicator-icon'
 							/>
 							<p>
 								<span className='current-details'>
@@ -223,22 +226,20 @@ const DashboardAirport = () => {
 							</p>
 							<p>
 								<span className='current-details'>Wind: </span>
-								<ul>
-									<li>{returnUpdated().wind.speed} m/s</li>
-									<li>{returnUpdated().wind.deg} deg</li>
-								</ul>
+								{returnUpdated().wind.speed} m/s{' '}
+								{returnUpdated().wind.deg} deg
 							</p>
 						</div>
 						<div className='arrival-history'>
 							<p
-								className='fetch-history'
+								className='current-details-headline'
 								onClick={e => fetchArrHistory(airport.icao)}>
-								Arrival-History (last 3 days):
+								Arrival-History
 							</p>
 							{arrHistory.map(flight => (
-								<div className='flights'>
+								<div className='arrivals'>
+									<p>{flight.callsign}</p>
 									<div className='date-location'>
-										<p>{flight.callsign}</p>
 										<p>
 											FROM:{' '}
 											<span
@@ -282,14 +283,14 @@ const DashboardAirport = () => {
 						</div>
 						<div className='departure-history'>
 							<p
-								className='fetch-history'
+								className='current-details-headline'
 								onClick={e => fetchDepHistory(airport.icao)}>
-								Departure-History (last 3 days):
+								Departure-History
 							</p>
 							{depHistory.map(flight => (
-								<div className='flights'>
+								<div className='departures'>
+									<p>{flight.callsign} </p>
 									<div className='date-location'>
-										<p>{flight.callsign}</p>
 										<p>
 											FROM:{' '}
 											<span

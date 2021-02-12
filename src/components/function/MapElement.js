@@ -91,7 +91,7 @@ const MapElement = () => {
 	const { data, error } = useSWR(url, {
 		revalidateOnFocus: false,
 		fetcher,
-		refreshInterval: 25000,
+		refreshInterval: 20000,
 	})
 
 	const getIcon = iconTrack =>
@@ -171,7 +171,7 @@ const MapElement = () => {
 											setAirport(false)
 											setPicture(null)
 											setSelectedTraffic(aircraft)
-											setSelected(true)
+											//setSelected(true)
 										},
 									}}
 								/>

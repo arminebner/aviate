@@ -1,6 +1,9 @@
 .dashboard-container {
 	width: 100%;
-	height: 350px;
+	height: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: #000;
 	background-image: linear-gradient(
 			180deg,
@@ -23,7 +26,7 @@
 }
 
 .dashboard {
-	width: 70%;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -46,19 +49,41 @@
 }
 
 .dashboard-data {
-	height: 350px;
+	height: 250px;
 	display: flex;
 	color: #fff;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
 }
 
 .general-data {
 	height: 100%;
+	width: 100%;
 	display: flex;
-	gap: 20px;
+	gap: 3rem;
+	justify-content: center;
 	align-items: center;
 }
 
 .aircraft-image {
+	display: flex;
+	flex-direction: column;
+}
+
+.aircraft-image img {
+	height: 290px;
+}
+
+.aircraft-image p {
+	margin-top: -1.5rem;
+	margin-right: 1rem;
+	align-self: flex-end;
+	font-size: 0.8rem;
+}
+
+.aircraft-image a {
+	color: #fff;
 }
 
 .follow-me {
@@ -78,6 +103,7 @@
 .current-position-info {
 	display: flex;
 	flex-direction: column;
+	align-self: flex-start;
 }
 
 .current-aircraft-info {
@@ -85,9 +111,17 @@
 	font-size: 1.5rem;
 }
 
+.current-aircraft-headline {
+	font-family: 'Bebas';
+	font-size: 2rem;
+}
+
 .flight-history {
+	height: 250px;
 	display: flex;
 	flex-direction: column;
+	align-self: flex-start;
+	overflow: auto;
 }
 
 .fetch-history {
@@ -98,10 +132,6 @@
 
 .flights {
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	gap: 1rem;
-	text-align: center;
 }
 
 .date-location {

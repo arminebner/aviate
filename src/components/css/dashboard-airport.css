@@ -1,11 +1,14 @@
 .dashboard-container2 {
 	width: 100%;
-	height: 350px;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	background-color: #000;
 	background-image: linear-gradient(
 			180deg,
-			rgba(0, 0, 0, 0.8),
-			rgba(0, 0, 0, 0.8)
+			rgba(0, 0, 0, 0.75),
+			rgba(0, 0, 0, 0.75)
 		),
 		url(../../img/fullHD/setup_1920.jpg);
 	background-position: center center;
@@ -23,7 +26,7 @@
 }
 
 .dashboard2 {
-	width: 70%;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -48,13 +51,16 @@
 .dashboard-data2 {
 	height: 350px;
 	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: center;
 	color: #fff;
 }
 
 .general-data2 {
-	height: 100%;
+	height: 350px;
 	display: flex;
-	gap: 20px;
+	gap: 2.5rem;
 	align-items: center;
 }
 
@@ -67,26 +73,68 @@
 }
 
 .current-airport-info {
+	height: 350px;
+	align-self: flex-start;
 	display: flex;
 	flex-direction: column;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
 }
 
-.fetch-history {
+.current-airport-weather {
+	height: 350px;
+	align-self: flex-start;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+/* .fetch-history {
 	font-family: 'Bebas';
 	font-size: 1.5rem;
-}
+} */
 
 .current-details {
 	font-family: 'Bebas';
 	font-size: 1.5rem;
 }
 
+.current-details-headline {
+	font-family: 'Bebas';
+	font-size: 2rem;
+	text-decoration: underline;
+}
+
+.date-location {
+	width: 130px;
+}
+
 .arrival-history {
-	height: 300px;
+	align-self: flex-start;
+	height: 350px;
 	overflow: auto;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.arrivals {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }
 
 .departure-history {
-	height: 300px;
+	align-self: flex-start;
+	height: 350px;
 	overflow: auto;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.departures {
+	display: flex;
+	flex-direction: row;
+	gap: 1rem;
 }

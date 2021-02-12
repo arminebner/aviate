@@ -22,6 +22,7 @@ const Dashboard = () => {
 	const [locationChanged, setLocationChanged] = change
 	const [follow, setFollow] = followMode
 	const [flightHistory, setFlightHistory] = history
+	const [photographer, setPhotographer] = useState('')
 
 	useEffect(() => {
 		let myHeaders = new Headers()
@@ -38,9 +39,10 @@ const Dashboard = () => {
 				requestOptions
 			)
 				.then(result => result.json())
-				.then(resJson =>
-					setPicture(resJson.photos[0].thumbnail_large.src)
-				)
+				.then(resJson => [
+					setPhotographer(resJson.photos[0].photographer),
+					setPicture(resJson.photos[0].thumbnail_large.src),
+				])
 				.catch(error => console.log('error', error))
 		}
 		fetchPicture(selectedTraffic[0])
@@ -79,8 +81,13 @@ const Dashboard = () => {
 		console.log('getHistory')
 		console.log(hexCode)
 
+		const header = {
+			Authorization: `Basic ${btoa(process.env.REACT_APP_OPEN_SKY)}`,
+		}
+
 		fetch(
-			`https://opensky-network.org/api/flights/aircraft?icao24=${hexCode}&begin=${begin}&end=${end}`
+			`https://opensky-network.org/api/flights/aircraft?icao24=${hexCode}&begin=${begin}&end=${end}`,
+			header
 		)
 			.then(result => result.json())
 			.then(resJson => setFlightHistory(resJson))
@@ -133,26 +140,35 @@ const Dashboard = () => {
 					<div className='general-data'>
 						<div className='aircraft-image'>
 							<img src={picture} alt='none available'></img>
+							<p>
+								&copy;{photographer} |{' '}
+								<a href='https://www.planespotters.net/'>
+									Planespotters.net
+								</a>
+							</p>
 						</div>
 						{follow ? (
 							<p
 								onClick={e => setFollow(false)}
 								className='unfollow'>
-								UNFOLLOW
+								<span className='current-details-headline'>
+									UNFOLLOW
+								</span>
 							</p>
 						) : (
 							<p
 								onClick={e => setFollow(true)}
 								className='follow-me'>
-								FOLLOW ME!
+								<span className='current-details-headline'>
+									FOLLOW ME!
+								</span>
 							</p>
 						)}
 						<div className='current-position-info'>
 							<p>
-								<span className='current-aircraft-info'>
-									Callsign:
-								</span>{' '}
-								{returnUpdated()[0][1]}
+								<span className='current-aircraft-headline'>
+									Callsign: {returnUpdated()[0][1]}
+								</span>
 							</p>
 							<p>
 								<span className='current-aircraft-info'>
@@ -175,7 +191,17 @@ const Dashboard = () => {
 							</p>
 							<p>
 								<span className='current-aircraft-info'>
-									Altitude:{' '}
+									Altitude ft:{' '}
+								</span>{' '}
+								{returnUpdated()[0][13]
+									? `${(
+											returnUpdated()[0][13] * 3.281
+									  ).toFixed(2)} feet`
+									: 'on ground'}
+							</p>
+							<p>
+								<span className='current-aircraft-info'>
+									Altitude m:{' '}
 								</span>{' '}
 								{returnUpdated()[0][13]
 									? `${returnUpdated()[0][13]} m`
@@ -188,56 +214,60 @@ const Dashboard = () => {
 								{Math.ceil(returnUpdated()[0][10])} degrees
 							</p>
 						</div>
-					</div>
-					<div className='flight-history'>
-						<p
-							className='fetch-history'
-							onClick={e => fetchHistory(returnUpdated()[0][0])}>
-							Flight-History (last 3 days):
-						</p>
-						{flightHistory.map(flight => (
-							<div className='flights'>
-								<div className='date-location'>
-									<p>
-										FROM:{' '}
-										<span
-											onClick={e =>
-												changeLocation(
-													flight.estDepartureAirport
-												)
-											}
-											className='location'>
-											{flight.estDepartureAirport}
-										</span>
-									</p>
-									<p>
-										@
-										{new Date(
-											flight.firstSeen * 1000
-										).toLocaleDateString()}
-									</p>
+						<div className='flight-history'>
+							<p
+								className='fetch-history'
+								onClick={e =>
+									fetchHistory(returnUpdated()[0][0])
+								}>
+								<span className='current-aircraft-headline'>
+									Flight-History (last 3 days)
+								</span>
+							</p>
+							{flightHistory.map(flight => (
+								<div className='flights'>
+									<div className='date-location'>
+										<p>
+											FROM:{' '}
+											<span
+												onClick={e =>
+													changeLocation(
+														flight.estDepartureAirport
+													)
+												}
+												className='location'>
+												{flight.estDepartureAirport}
+											</span>
+										</p>
+										<p>
+											@
+											{new Date(
+												flight.firstSeen * 1000
+											).toLocaleDateString()}
+										</p>
+									</div>
+									<div className='date-location'>
+										<p>
+											TO:{' '}
+											<span
+												onClick={e =>
+													changeLocation(
+														flight.estArrivalAirport
+													)
+												}
+												className='location'>
+												{flight.estArrivalAirport}
+											</span>
+										</p>
+										<p>
+											{new Date(
+												flight.lastSeen * 1000
+											).toLocaleDateString()}
+										</p>
+									</div>
 								</div>
-								<div className='date-location'>
-									<p>
-										TO:{' '}
-										<span
-											onClick={e =>
-												changeLocation(
-													flight.estArrivalAirport
-												)
-											}
-											className='location'>
-											{flight.estArrivalAirport}
-										</span>
-									</p>
-									<p>
-										{new Date(
-											flight.lastSeen * 1000
-										).toLocaleDateString()}
-									</p>
-								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
 				</div>
 			</div>

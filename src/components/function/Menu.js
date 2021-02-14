@@ -81,7 +81,7 @@ const Menu = () => {
 					<button
 						className='menu-item location-button'
 						onClick={airportSet}>
-						setNewLocation
+						set new location
 					</button>
 				</form>
 			</div>

@@ -86,18 +86,38 @@
 	color: #fff;
 }
 
-.follow-me {
+.follow-mode {
+	height: 100%;
+	writing-mode: vertical-lr;
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
+	color: rgb(228, 186, 0);
+	border-radius: 2px;
+	border: 1px solid rgb(228, 186, 0);
 	font-family: 'Bebas';
-	font-size: 1.5rem;
-	color: green;
+	font-size: 2rem;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
+	transform: rotate(-180deg);
+	letter-spacing: 0.5rem;
 }
 
 .unfollow {
-	cursor: pointer;
-	font-family: 'Bebas';
-	font-size: 1.5rem;
-	color: red;
+	border: 1px solid rgb(184, 0, 0);
+	animation: follow 5s infinite;
+	color: #fff;
+}
+
+@keyframes follow {
+	0% {
+		background-color: rgb(102, 0, 0);
+	}
+	50% {
+		background-color: rgb(184, 0, 0);
+	}
 }
 
 .current-position-info {
@@ -114,6 +134,7 @@
 .current-aircraft-headline {
 	font-family: 'Bebas';
 	font-size: 2rem;
+	text-decoration: underline;
 }
 
 .flight-history {

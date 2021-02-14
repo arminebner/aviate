@@ -62,7 +62,7 @@ body {
 }
 
 .landing-footer h3 {
-	color: rgba(0, 0, 0, 0.6);
+	color: rgb(255, 255, 255);
 	font-family: 'Bebas';
 	margin-bottom: 1rem;
 }
@@ -71,6 +71,7 @@ body {
 	display: flex;
 	justify-content: center;
 	gap: 3rem;
+	height: 50px;
 }
 
 .setup {

@@ -11,6 +11,8 @@ const DashboardAirport = () => {
 		change,
 		departures,
 		arrivals,
+		showDepartures,
+		showArrivals,
 	} = useContext(DataContext)
 	const [airport, setAirport] = selectedAirport
 	const [weather, setWeather] = useState()
@@ -20,6 +22,8 @@ const DashboardAirport = () => {
 	const [location, setLocation] = newLocation
 	const [nearestAirport, setNearestAirport] = nearest
 	const [locationChanged, setLocationChanged] = change
+	const [showArrHistory, setShowArrHistory] = showArrivals
+	const [showDepHistory, setShowDepHistory] = showDepartures
 
 	useEffect(() => {
 		const fetchWeather = airport => {
@@ -72,7 +76,7 @@ const DashboardAirport = () => {
 		setAirport(false)
 		setWeather(null)
 		setArrHistory([])
-		setDepHistory([])
+		setShowDepHistory([])
 	}
 
 	const fetchArrHistory = icao => {
@@ -80,6 +84,7 @@ const DashboardAirport = () => {
 		let end = Math.floor(new Date().getTime() / 1000.0)
 		console.log('getArrHistory')
 		console.log(icao)
+		setShowArrHistory(true)
 
 		const header = {
 			Authorization: `Basic ${btoa(process.env.REACT_APP_OPEN_SKY)}`,
@@ -97,6 +102,8 @@ const DashboardAirport = () => {
 	const fetchDepHistory = icao => {
 		let begin = Math.floor(new Date().getTime() / 1000.0) - 259200
 		let end = Math.floor(new Date().getTime() / 1000.0)
+		setShowDepHistory(true)
+
 		console.log('getDepHistory')
 		console.log(icao)
 
@@ -230,108 +237,120 @@ const DashboardAirport = () => {
 								{returnUpdated().wind.deg} deg
 							</p>
 						</div>
-						<div className='arrival-history'>
-							<p
-								className='current-details-headline'
+						{!showArrHistory ? (
+							<div
+								className='history-button'
 								onClick={e => fetchArrHistory(airport.icao)}>
-								Arrival-History
-							</p>
-							{arrHistory.map(flight => (
-								<div className='arrivals'>
-									<p>{flight.callsign}</p>
-									<div className='date-location'>
-										<p>
-											FROM:{' '}
-											<span
-												onClick={e =>
-													changeLocation(
-														flight.estDepartureAirport
-													)
-												}
-												className='location'>
-												{flight.estDepartureAirport}
-											</span>
-										</p>
-										<p>
-											@
-											{new Date(
-												flight.firstSeen * 1000
-											).toLocaleDateString()}
-										</p>
+								Arrival History
+							</div>
+						) : (
+							<div className='arrival-history'>
+								<p className='current-details-headline'>
+									Arrival-History
+								</p>
+								{arrHistory.map(flight => (
+									<div className='arrivals'>
+										<p>{flight.callsign}</p>
+										<div className='date-location'>
+											<p>
+												FROM:{' '}
+												<span
+													onClick={e =>
+														changeLocation(
+															flight.estDepartureAirport
+														)
+													}
+													className='location'>
+													{flight.estDepartureAirport}
+												</span>
+											</p>
+											<p>
+												@
+												{new Date(
+													flight.firstSeen * 1000
+												).toLocaleDateString()}
+											</p>
+										</div>
+										<div className='date-location'>
+											<p>
+												TO:{' '}
+												<span
+													onClick={e =>
+														changeLocation(
+															flight.estArrivalAirport
+														)
+													}
+													className='location'>
+													{flight.estArrivalAirport}
+												</span>
+											</p>
+											<p>
+												{new Date(
+													flight.lastSeen * 1000
+												).toLocaleDateString()}
+											</p>
+										</div>
 									</div>
-									<div className='date-location'>
-										<p>
-											TO:{' '}
-											<span
-												onClick={e =>
-													changeLocation(
-														flight.estArrivalAirport
-													)
-												}
-												className='location'>
-												{flight.estArrivalAirport}
-											</span>
-										</p>
-										<p>
-											{new Date(
-												flight.lastSeen * 1000
-											).toLocaleDateString()}
-										</p>
-									</div>
-								</div>
-							))}
-						</div>
-						<div className='departure-history'>
-							<p
-								className='current-details-headline'
+								))}
+							</div>
+						)}
+						{!showDepHistory ? (
+							<div
+								className='history-button'
 								onClick={e => fetchDepHistory(airport.icao)}>
-								Departure-History
-							</p>
-							{depHistory.map(flight => (
-								<div className='departures'>
-									<p>{flight.callsign} </p>
-									<div className='date-location'>
-										<p>
-											FROM:{' '}
-											<span
-												onClick={e =>
-													changeLocation(
-														flight.estDepartureAirport
-													)
-												}
-												className='location'>
-												{flight.estDepartureAirport}
-											</span>
-										</p>
-										<p>
-											@
-											{new Date(
-												flight.firstSeen * 1000
-											).toLocaleDateString()}
-										</p>
+								Departure History
+							</div>
+						) : (
+							<div className='departure-history'>
+								<p className='current-details-headline'>
+									Departure-History
+								</p>
+								{depHistory.map(flight => (
+									<div className='departures'>
+										<p>{flight.callsign} </p>
+										<div className='date-location'>
+											<p>
+												FROM:{' '}
+												<span
+													onClick={e =>
+														changeLocation(
+															flight.estDepartureAirport
+														)
+													}
+													className='location'>
+													{flight.estDepartureAirport}
+												</span>
+											</p>
+											<p>
+												@
+												{new Date(
+													flight.firstSeen * 1000
+												).toLocaleDateString()}
+											</p>
+										</div>
+										<div className='date-location'>
+											<p>
+												TO:{' '}
+												<span
+													onClick={e =>
+														changeLocation(
+															flight.estArrivalAirport
+														)
+													}
+													className='location'>
+													{flight.estArrivalAirport}
+												</span>
+											</p>
+											<p>
+												{new Date(
+													flight.lastSeen * 1000
+												).toLocaleDateString()}
+											</p>
+										</div>
 									</div>
-									<div className='date-location'>
-										<p>
-											TO:{' '}
-											<span
-												onClick={e =>
-													changeLocation(
-														flight.estArrivalAirport
-													)
-												}
-												className='location'>
-												{flight.estArrivalAirport}
-											</span>
-										</p>
-										<p>
-											{new Date(
-												flight.lastSeen * 1000
-											).toLocaleDateString()}
-										</p>
-									</div>
-								</div>
-							))}
-						</div>
+								))}
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

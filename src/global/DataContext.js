@@ -24,6 +24,9 @@ export const DataProvider = props => {
 			estArrivalAirport: 'EHAM',
 		},
 	])
+	const [showArrHistory, setShowArrHistory] = useState(false)
+	const [showDepHistory, setShowDepHistory] = useState(false)
+	const [showFlightHistory, setShowFlightHistory] = useState(false)
 
 	return (
 		<DataContext.Provider
@@ -41,7 +44,10 @@ export const DataProvider = props => {
 				history: [flightHistory, setFlightHistory],
 				compass: [showCompass, setShowCompass],
 				departures: [depHistory, setDepHistory],
+				showDepartures: [showDepHistory, setShowDepHistory],
 				arrivals: [arrHistory, setArrHistory],
+				showArrivals: [showArrHistory, setShowArrHistory],
+				showPastFlights: [showFlightHistory, setShowFlightHistory],
 			}}>
 			{props.children}
 		</DataContext.Provider>

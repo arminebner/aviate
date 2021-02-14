@@ -80,6 +80,7 @@
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 
 .current-airport-weather {
@@ -88,6 +89,7 @@
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 /* .fetch-history {
 	font-family: 'Bebas';
@@ -116,6 +118,7 @@
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 
 .arrivals {
@@ -131,10 +134,27 @@
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 
 .departures {
 	display: flex;
 	flex-direction: row;
 	gap: 1rem;
+}
+
+.history-button {
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 2px;
+	border: 1px solid #fff;
+	font-family: 'Bebas';
+	font-size: 2rem;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }

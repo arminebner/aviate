@@ -37,6 +37,9 @@ const MapElement = () => {
 		compass,
 		departures,
 		arrivals,
+		showArrivals,
+		showDepartures,
+		showPastFlights,
 	} = useContext(DataContext)
 	const [selectedTraffic, setSelectedTraffic] = selectedAircraft
 	const [traffic, setTraffic] = allTraffic
@@ -58,6 +61,9 @@ const MapElement = () => {
 	const [showCompass, setShowCompass] = compass
 	const [depHistory, setDepHistory] = departures
 	const [arrHistory, setArrHistory] = arrivals
+	const [showArrHistory, setShowArrHistory] = showArrivals
+	const [showDepHistory, setShowDepHistory] = showDepartures
+	const [showFlightHistory, setShowFlightHistory] = showPastFlights
 
 	const setApiBorders = location => {
 		setLamin(location.latitude - 3)
@@ -167,6 +173,7 @@ const MapElement = () => {
 									icon={getIcon(aircraft[10])}
 									eventHandlers={{
 										click: e => {
+											setShowFlightHistory(false)
 											setFlightHistory([])
 											setAirport(false)
 											setPicture(null)
@@ -188,6 +195,8 @@ const MapElement = () => {
 									icon={getAirportIcon(airport.name)}
 									eventHandlers={{
 										click: e => {
+											setShowDepHistory(false)
+											setShowArrHistory(false)
 											setArrHistory([])
 											setDepHistory([])
 											setSelectedTraffic(false)

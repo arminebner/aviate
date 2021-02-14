@@ -1,6 +1,6 @@
 .weather-container {
 	position: absolute;
-	top: 30vh;
+	top: 20vh;
 	left: 0;
 	z-index: 1000;
 	border: 2px solid #000;

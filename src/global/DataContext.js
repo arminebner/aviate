@@ -14,8 +14,8 @@ export const DataProvider = props => {
 	const [showWindMap, setShowWindMap] = useState(false)
 	const [follow, setFollow] = useState(false)
 	const [showCompass, setShowCompass] = useState(false)
-	const [depHistory, setDepHistory] = useState([])
-	const [arrHistory, setArrHistory] = useState([])
+	const [depHistory, setDepHistory] = useState()
+	const [arrHistory, setArrHistory] = useState()
 	const [flightHistory, setFlightHistory] = useState([
 		{
 			firstSeen: 1612828311,

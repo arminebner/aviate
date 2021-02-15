@@ -102,6 +102,8 @@ const MapElement = () => {
 
 	const getIcon = iconTrack =>
 		L.divIcon({
+			iconSize: [40, 40],
+			iconAnchor: [20, 20],
 			html: ReactDOMServer.renderToString(<OwnIcon track={iconTrack} />),
 			className: 'custom-icon',
 		})
@@ -122,6 +124,7 @@ const MapElement = () => {
 
 	function ChangeCenter() {
 		const map = useMap()
+		//L.control.scale().addTo(map)
 		if (locationChanged) {
 			map.setView([location.latitude, location.longitude])
 			setApiBorders(location)
@@ -135,6 +138,7 @@ const MapElement = () => {
 			{location && nearestAirports ? (
 				//onClick funnction here to set setSelectedIcon to false
 				<MapContainer
+					scale='bottom-left'
 					className='leaflet-container'
 					center={[location.latitude, location.longitude]}
 					zoom={12}>
@@ -173,6 +177,7 @@ const MapElement = () => {
 									icon={getIcon(aircraft[10])}
 									eventHandlers={{
 										click: e => {
+											setFollow(false)
 											setShowFlightHistory(false)
 											setFlightHistory([])
 											setAirport(false)
@@ -197,8 +202,8 @@ const MapElement = () => {
 										click: e => {
 											setShowDepHistory(false)
 											setShowArrHistory(false)
-											setArrHistory([])
-											setDepHistory([])
+											setArrHistory()
+											setDepHistory()
 											setSelectedTraffic(false)
 											setAirport(airport)
 										},

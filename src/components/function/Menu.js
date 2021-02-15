@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import airports from 'airport-data'
 import { DataContext } from '../../global/DataContext'
 import '../css/menu.css'
@@ -12,6 +12,7 @@ const Menu = () => {
 		winddata,
 		selectedAircraft,
 		compass,
+		allTraffic,
 	} = useContext(DataContext)
 	const [showAirports, setShowAirports] = airportIcons
 	const [selectedTraffic, setSelectedTraffic] = selectedAircraft
@@ -20,8 +21,24 @@ const Menu = () => {
 	const [locationChanged, setLocationChanged] = change
 	const [showWindMap, setShowWindMap] = winddata
 	const [showCompass, setShowCompass] = compass
-
+	const [timer, setTimer] = useState(0)
+	const [traffic, setTraffic] = allTraffic
 	const [airportInput, setAirportInput] = useState(null)
+
+	useEffect(() => {
+		setTimer(0)
+		setTime()
+	}, [traffic])
+
+	const setTime = () => {
+		let time = 0
+		setInterval(() => {
+			if (time < 20) {
+				time++
+				setTimer(time)
+			}
+		}, 1000)
+	}
 
 	const toggleAirports = () => setShowAirports(!showAirports)
 	const toggleWindMap = () => setShowWindMap(!showWindMap)
@@ -68,9 +85,7 @@ const Menu = () => {
 			<div className='menu-item toggle-windmap' onClick={toggleWindMap}>
 				Toggle Windmap
 			</div>
-			<div onClick={toggleCompass} className='menu-item toggle-compass'>
-				Show Compass-Rose
-			</div>
+
 			<div className='menu-item new-location'>
 				<form className='set-airport-form-menu'>
 					<input
@@ -85,6 +100,7 @@ const Menu = () => {
 					</button>
 				</form>
 			</div>
+			<div className='timer'>Timer: {timer}</div>
 		</div>
 	)
 }

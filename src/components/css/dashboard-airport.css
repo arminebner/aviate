@@ -18,7 +18,7 @@
 	z-index: 400;
 	transform: translateY(100%);
 	transition: all 0.5s ease-in;
-	border-top: 2px solid #fff;
+	border-top: 5px solid #000;
 }
 
 .showing {
@@ -37,7 +37,7 @@
 	left: 50%;
 	transform: translate(-50%);
 	bottom: 100%;
-	background-color: rgba(0, 0, 0, 0.9);
+	background-color: rgba(0, 0, 0, 0.7);
 	cursor: pointer;
 	color: #fff;
 	display: flex;
@@ -46,6 +46,16 @@
 	border: 2px solid #fff;
 	border-bottom: none;
 	border-radius: 2px;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+	letter-spacing: 0.3rem;
+	transform: translateY(450px);
+	transition: all 0.5s ease-in;
+	z-index: 0;
+}
+
+.glareshield-showing {
+	transform: translateY(0%);
 }
 
 .dashboard-data2 {
@@ -111,6 +121,19 @@
 	width: 130px;
 }
 
+.loading-spinner {
+	align-self: flex-start;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 350px;
+	overflow: auto;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
+}
+
 .arrival-history {
 	align-self: flex-start;
 	height: 350px;
@@ -145,6 +168,7 @@
 
 .history-button {
 	padding: 1rem;
+	gap: 1rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;

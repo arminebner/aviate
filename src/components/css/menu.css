@@ -2,7 +2,7 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	width: 250px;
+	width: 200px;
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 400;
 	padding: 1rem;
@@ -22,25 +22,25 @@
 	align-items: center;
 	border: 1px solid #fff;
 	font-family: 'Bebas';
-	font-size: 1.2rem;
+	font-size: 1.1rem;
 }
 
 .toggle-airports {
-	height: 50px;
+	height: 40px;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
 }
 
 .toggle-windmap {
-	height: 50px;
+	height: 40px;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
 }
 
 .toggle-compass {
-	height: 50px;
+	height: 40px;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
@@ -60,6 +60,12 @@
 }
 
 .location-button {
-	height: 50px;
+	height: 40px;
 	cursor: pointer;
+}
+
+.timer {
+	color: #fff;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
 }

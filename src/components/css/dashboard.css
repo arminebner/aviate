@@ -7,8 +7,8 @@
 	background-color: #000;
 	background-image: linear-gradient(
 			180deg,
-			rgba(0, 0, 0, 0.8),
-			rgba(0, 0, 0, 0.8)
+			rgba(0, 0, 0, 0.7),
+			rgba(0, 0, 0, 0.7)
 		),
 		url(../../img/fullHD/dashboard_1920.jpg);
 	background-position: center center;
@@ -18,7 +18,7 @@
 	z-index: 400;
 	transform: translateY(100%);
 	transition: all 0.5s ease-in;
-	border-top: 2px solid #fff;
+	border-top: 5px solid #000;
 }
 
 .showing {
@@ -46,6 +46,12 @@
 	border: 2px solid #fff;
 	border-bottom: none;
 	border-radius: 2px;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+	letter-spacing: 0.3rem;
+	transform: translateY(450px);
+	transition: all 0.5s ease-in;
+	z-index: 0;
 }
 
 .dashboard-data {
@@ -64,6 +70,20 @@
 	gap: 3rem;
 	justify-content: center;
 	align-items: center;
+}
+
+.armin-logo {
+	font-size: 0.8rem;
+	color: rgb(109, 109, 109);
+	padding: 1rem;
+	transform: rotate(-90deg);
+	margin-right: -120px;
+	background-color: #1971c91e;
+	border: 1px solid #1971c93a;
+}
+
+.armin-logo img {
+	width: 150px;
 }
 
 .aircraft-image {
@@ -124,6 +144,10 @@
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 
 .current-aircraft-info {
@@ -143,6 +167,10 @@
 	flex-direction: column;
 	align-self: flex-start;
 	overflow: auto;
+	padding: 1rem;
+	border-radius: 3px;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
 }
 
 .fetch-history {
@@ -160,4 +188,31 @@
 
 .location {
 	cursor: pointer;
+}
+
+.controlls-container {
+	display: flex;
+	gap: 0.5rem;
+	align-self: flex-start;
+}
+
+.controlls {
+	width: 2rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+	border-radius: 2px;
+	font-size: 1.3rem;
+	font-family: 'Bebas';
+	box-shadow: 2px 2px 5px #000;
+	cursor: pointer;
+}
+
+.minimize {
+	background-color: green;
+}
+
+.close {
+	background-color: red;
 }

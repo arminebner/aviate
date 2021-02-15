@@ -72,3 +72,6 @@ curl -s "https://opensky-network.org/api/flights/aircraft?icao24=3c675a&begin=15
 		// console.log(roundedLatArr_roundedLong);
 
 
+<div onClick={toggleCompass} className='menu-item toggle-compass'>
+				Show Compass-Rose
+			</div>

@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import { DataContext } from '../../global/DataContext'
 import airports from 'airport-data'
 import '../css/dashboard.css'
+import arminLogo from '../../img/logos/garmin.svg'
+import loader from '../../img/Icons/ajax-loader.gif'
+import placeholderImage from '../../img/fullHD/placeholder-aircraft.png'
 
 const Dashboard = () => {
 	const {
@@ -26,6 +29,7 @@ const Dashboard = () => {
 	const [photographer, setPhotographer] = useState('')
 	const [link, setLink] = useState('')
 	const [showFlightHistory, setShowFlightHistory] = showPastFlights
+	const [maximized, setMaximized] = useState(true)
 
 	useEffect(() => {
 		let myHeaders = new Headers()
@@ -76,7 +80,16 @@ const Dashboard = () => {
 	const closeHandler = () => {
 		setSelectedTraffic(false)
 		setFollow(false)
+		setMaximized(true)
 		//setPicture(null) to placeholder-image
+	}
+
+	const maximizeHandler = () => {
+		setMaximized(false)
+	}
+
+	const glareshieldToggleHandler = () => {
+		setMaximized(true)
 	}
 
 	const fetchHistory = hexCode => {
@@ -133,26 +146,38 @@ const Dashboard = () => {
 	return (
 		<div
 			className={`dashboard-container ${
-				selectedTraffic ? 'showing' : ''
+				selectedTraffic && maximized ? 'showing' : ''
 			}`}>
 			<div
-				onClick={closeHandler}
-				className={`${selectedTraffic ? 'glareshield' : ''}`}>
-				close
+				onClick={glareshieldToggleHandler}
+				className={`glareshield ${
+					!maximized ? 'glareshield-showing' : ''
+				}`}>
+				extend
 			</div>
 			<div className='dashboard'>
 				<div className='dashboard-data'>
 					<div className='general-data'>
+						<div className='armin-logo'>
+							Avionics by:
+							<img src={arminLogo} alt='armin-logo' />
+						</div>
 						<div className='aircraft-image'>
 							<a href={link}>
-								<img src={picture} alt='none available'></img>
+								<img
+									src={picture ? picture : placeholderImage}
+									alt='none available'></img>
 							</a>
-							<p>
-								&copy;{photographer} |{' '}
-								<a href='https://www.planespotters.net/'>
-									Planespotters.net
-								</a>
-							</p>
+							{picture ? (
+								<p>
+									&copy;{photographer} |{' '}
+									<a href='https://www.planespotters.net/'>
+										Planespotters.net
+									</a>
+								</p>
+							) : (
+								''
+							)}
 						</div>
 						{follow ? (
 							<p
@@ -232,51 +257,76 @@ const Dashboard = () => {
 										Flight-History (last 3 days)
 									</span>
 								</p>
-								{flightHistory.map(flight => (
-									<div className='flights'>
-										<div className='date-location'>
-											<p>
-												FROM:{' '}
-												<span
-													onClick={e =>
-														changeLocation(
-															flight.estDepartureAirport
-														)
-													}
-													className='location'>
-													{flight.estDepartureAirport}
-												</span>
-											</p>
-											<p>
-												@
-												{new Date(
-													flight.firstSeen * 1000
-												).toLocaleDateString()}
-											</p>
-										</div>
-										<div className='date-location'>
-											<p>
-												TO:{' '}
-												<span
-													onClick={e =>
-														changeLocation(
-															flight.estArrivalAirport
-														)
-													}
-													className='location'>
-													{flight.estArrivalAirport}
-												</span>
-											</p>
-											<p>
-												{new Date(
-													flight.lastSeen * 1000
-												).toLocaleDateString()}
-											</p>
-										</div>
+								{flightHistory ? (
+									<div className='loading-spinner'>
+										<img
+											src={loader}
+											alt='loading-spinner'
+										/>
 									</div>
-								))}
+								) : (
+									flightHistory.map(flight => (
+										<div className='flights'>
+											<div className='date-location'>
+												<p>
+													FROM:{' '}
+													<span
+														onClick={e =>
+															changeLocation(
+																flight.estDepartureAirport
+															)
+														}
+														className='location'>
+														{
+															flight.estDepartureAirport
+														}
+													</span>
+												</p>
+												<p>
+													@
+													{new Date(
+														flight.firstSeen * 1000
+													).toLocaleDateString()}
+												</p>
+											</div>
+											<div className='date-location'>
+												<p>
+													TO:{' '}
+													<span
+														onClick={e =>
+															changeLocation(
+																flight.estArrivalAirport
+															)
+														}
+														className='location'>
+														{
+															flight.estArrivalAirport
+														}
+													</span>
+												</p>
+												<p>
+													{new Date(
+														flight.lastSeen * 1000
+													).toLocaleDateString()}
+												</p>
+											</div>
+										</div>
+									))
+								)}
 							</div>
 						)}
+						<div className='controlls-container'>
+							<div
+								onClick={maximizeHandler}
+								className='controlls minimize'>
+								__
+							</div>
+							<div
+								onClick={closeHandler}
+								className='controlls close'>
+								X
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

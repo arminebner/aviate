@@ -21,7 +21,7 @@ const Menu = () => {
 	const [locationChanged, setLocationChanged] = change
 	const [showWindMap, setShowWindMap] = winddata
 	const [showCompass, setShowCompass] = compass
-	const [timer, setTimer] = useState(0)
+	const [timer, setTimer] = useState()
 	const [traffic, setTraffic] = allTraffic
 	const [airportInput, setAirportInput] = useState(null)
 
@@ -31,10 +31,10 @@ const Menu = () => {
 	}, [traffic])
 
 	const setTime = () => {
-		let time = 0
+		let time = 20
 		setInterval(() => {
-			if (time < 20) {
-				time++
+			if (time > 0) {
+				time--
 				setTimer(time)
 			}
 		}, 1000)

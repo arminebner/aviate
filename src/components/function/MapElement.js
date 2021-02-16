@@ -179,7 +179,7 @@ const MapElement = () => {
 										click: e => {
 											setFollow(false)
 											setShowFlightHistory(false)
-											setFlightHistory([])
+											setFlightHistory(null)
 											setAirport(false)
 											setPicture(null)
 											setSelectedTraffic(aircraft)
@@ -202,8 +202,8 @@ const MapElement = () => {
 										click: e => {
 											setShowDepHistory(false)
 											setShowArrHistory(false)
-											setArrHistory()
-											setDepHistory()
+											setArrHistory(null)
+											setDepHistory(null)
 											setSelectedTraffic(false)
 											setAirport(airport)
 										},

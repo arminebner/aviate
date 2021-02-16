@@ -28,6 +28,29 @@ const DashboardAirport = () => {
 	const [showArrHistory, setShowArrHistory] = showArrivals
 	const [showDepHistory, setShowDepHistory] = showDepartures
 	const [maximized, setMaximized] = useState(true)
+	const [tempHistory, setTempHistory] = useState([
+		{
+			callsign: 'N2RF',
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'EDDK',
+			estArrivalAirport: 'EHAM',
+		},
+		{
+			callsign: 'N9GM',
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'EDDF',
+			estArrivalAirport: 'KORD',
+		},
+		{
+			callsign: 'DAMRI',
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'KJFK',
+			estArrivalAirport: 'ZGSZ',
+		},
+	])
 
 	useEffect(() => {
 		const fetchWeather = airport => {
@@ -267,12 +290,66 @@ const DashboardAirport = () => {
 									Arrival-History
 								</p>
 								{!arrHistory ? (
-									<div className='loading-spinner'>
-										<img
-											src={loader}
-											alt='loading-spinner'
-										/>
-									</div>
+									<>
+										<div className='loading-spinner'>
+											<img
+												src={loader}
+												alt='loading-spinner'
+											/>
+										</div>
+										<div className='prefilledHistory'>
+											{tempHistory.map(item => (
+												<div className='arrivals'>
+													<p>{item.callsign}</p>
+													<div className='date-location'>
+														<p>
+															FROM:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estDepartureAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estDepartureAirport
+																}
+															</span>
+														</p>
+														<p>
+															@
+															{new Date(
+																item.firstSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+													<div className='date-location'>
+														<p>
+															TO:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estArrivalAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estArrivalAirport
+																}
+															</span>
+														</p>
+														<p>
+															{new Date(
+																item.lastSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+												</div>
+											))}
+										</div>
+									</>
 								) : (
 									arrHistory.map(flight => (
 										<div className='arrivals'>
@@ -338,12 +415,66 @@ const DashboardAirport = () => {
 									Departure-History
 								</p>
 								{!depHistory ? (
-									<div className='loading-spinner'>
-										<img
-											src={loader}
-											alt='loading-spinner'
-										/>
-									</div>
+									<>
+										<div className='loading-spinner'>
+											<img
+												src={loader}
+												alt='loading-spinner'
+											/>
+										</div>
+										<div className='prefilledHistory'>
+											{tempHistory.map(item => (
+												<div className='arrivals'>
+													<p>{item.callsign}</p>
+													<div className='date-location'>
+														<p>
+															FROM:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estDepartureAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estDepartureAirport
+																}
+															</span>
+														</p>
+														<p>
+															@
+															{new Date(
+																item.firstSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+													<div className='date-location'>
+														<p>
+															TO:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estArrivalAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estArrivalAirport
+																}
+															</span>
+														</p>
+														<p>
+															{new Date(
+																item.lastSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+												</div>
+											))}
+										</div>
+									</>
 								) : (
 									depHistory.map(flight => (
 										<div className='departures'>

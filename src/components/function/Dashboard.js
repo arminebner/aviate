@@ -30,10 +30,32 @@ const Dashboard = () => {
 	const [link, setLink] = useState('')
 	const [showFlightHistory, setShowFlightHistory] = showPastFlights
 	const [maximized, setMaximized] = useState(true)
+	const [historyLoading, setHistoryLoading] = useState(false)
+	const [tempFlightHistory, showTempFlightHistory] = useState([
+		{
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'EDDK',
+			estArrivalAirport: 'EHAM',
+		},
+		{
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'EDDF',
+			estArrivalAirport: 'KORD',
+		},
+		{
+			firstSeen: 1612828311,
+			lastSeen: 1612834311,
+			estDepartureAirport: 'KJFK',
+			estArrivalAirport: 'ZGSZ',
+		},
+	])
 
 	useEffect(() => {
 		let myHeaders = new Headers()
 		myHeaders.append('x-auth-token', process.env.REACT_APP_ACCESS_TOKEN)
+		console.log(tempFlightHistory)
 
 		let requestOptions = {
 			method: 'GET',
@@ -93,6 +115,7 @@ const Dashboard = () => {
 	}
 
 	const fetchHistory = hexCode => {
+		setHistoryLoading(true)
 		let begin = Math.floor(new Date().getTime() / 1000.0) - 259200
 		let end = Math.floor(new Date().getTime() / 1000.0)
 		console.log('getHistory')
@@ -158,20 +181,30 @@ const Dashboard = () => {
 			<div className='dashboard'>
 				<div className='dashboard-data'>
 					<div className='general-data'>
-						<div className='armin-logo'>
-							Avionics by:
-							<img src={arminLogo} alt='armin-logo' />
-						</div>
+						<a
+							href='https://www.arminebner.com'
+							target='_blank'
+							rel='noreferrer'>
+							<div className='armin-logo'>
+								Avionics by:
+								<img src={arminLogo} alt='armin-logo' />
+							</div>
+						</a>
 						<div className='aircraft-image'>
 							<a href={link}>
 								<img
 									src={picture ? picture : placeholderImage}
-									alt='none available'></img>
+									alt='none available'
+									target='_blank'
+									rel='noreferrer'></img>
 							</a>
 							{picture ? (
 								<p>
 									&copy;{photographer} |{' '}
-									<a href='https://www.planespotters.net/'>
+									<a
+										href='https://www.planespotters.net/'
+										target='_blank'
+										rel='noreferrer'>
 										Planespotters.net
 									</a>
 								</p>
@@ -257,13 +290,66 @@ const Dashboard = () => {
 										Flight-History (last 3 days)
 									</span>
 								</p>
-								{flightHistory ? (
-									<div className='loading-spinner'>
-										<img
-											src={loader}
-											alt='loading-spinner'
-										/>
-									</div>
+								{!flightHistory ? (
+									<>
+										<div className='loading-spinner'>
+											<img
+												src={loader}
+												alt='loading-spinner'
+											/>
+										</div>
+										<div className='prefilled-flights'>
+											{tempFlightHistory.map(item => (
+												<div className='flights'>
+													<div className='date-location'>
+														<p>
+															FROM:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estDepartureAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estDepartureAirport
+																}
+															</span>
+														</p>
+														<p>
+															@
+															{new Date(
+																item.firstSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+													<div className='date-location'>
+														<p>
+															TO:{' '}
+															<span
+																onClick={e =>
+																	changeLocation(
+																		item.estArrivalAirport
+																	)
+																}
+																className='location'>
+																{
+																	item.estArrivalAirport
+																}
+															</span>
+														</p>
+														<p>
+															{new Date(
+																item.lastSeen *
+																	1000
+															).toLocaleDateString()}
+														</p>
+													</div>
+												</div>
+											))}
+										</div>
+									</>
 								) : (
 									flightHistory.map(flight => (
 										<div className='flights'>

@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/aviate/static/css/main.54fc44a8.chunk.css",
-    "main.js": "/aviate/static/js/main.5e1791f1.chunk.js",
-    "main.js.map": "/aviate/static/js/main.5e1791f1.chunk.js.map",
+    "main.js": "/aviate/static/js/main.667dbc36.chunk.js",
+    "main.js.map": "/aviate/static/js/main.667dbc36.chunk.js.map",
     "runtime-main.js": "/aviate/static/js/runtime-main.eed3156f.js",
     "runtime-main.js.map": "/aviate/static/js/runtime-main.eed3156f.js.map",
-    "static/js/2.0748308d.chunk.js": "/aviate/static/js/2.0748308d.chunk.js",
-    "static/js/2.0748308d.chunk.js.map": "/aviate/static/js/2.0748308d.chunk.js.map",
+    "static/js/2.43ad9475.chunk.js": "/aviate/static/js/2.43ad9475.chunk.js",
+    "static/js/2.43ad9475.chunk.js.map": "/aviate/static/js/2.43ad9475.chunk.js.map",
     "static/js/3.a37cad54.chunk.js": "/aviate/static/js/3.a37cad54.chunk.js",
     "static/js/3.a37cad54.chunk.js.map": "/aviate/static/js/3.a37cad54.chunk.js.map",
     "index.html": "/aviate/index.html",
     "static/css/main.54fc44a8.chunk.css.map": "/aviate/static/css/main.54fc44a8.chunk.css.map",
-    "static/js/2.0748308d.chunk.js.LICENSE.txt": "/aviate/static/js/2.0748308d.chunk.js.LICENSE.txt",
+    "static/js/2.43ad9475.chunk.js.LICENSE.txt": "/aviate/static/js/2.43ad9475.chunk.js.LICENSE.txt",
     "static/media/index.css": "/aviate/static/media/OpenSans-Regular.1b0809d5.ttf",
     "static/media/airplane-selected.821668a3.svg": "/aviate/static/media/airplane-selected.821668a3.svg",
     "static/media/airplane.cea70e0f.svg": "/aviate/static/media/airplane.cea70e0f.svg",
@@ -31,8 +31,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.eed3156f.js",
-    "static/js/2.0748308d.chunk.js",
+    "static/js/2.43ad9475.chunk.js",
     "static/css/main.54fc44a8.chunk.css",
-    "static/js/main.5e1791f1.chunk.js"
+    "static/js/main.667dbc36.chunk.js"
   ]
 }

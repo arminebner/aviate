@@ -24,7 +24,7 @@ const Landing = () => {
 		const audioEl = document.getElementsByClassName('audio-element')[0]
 		audioEl.play()
 		setTimeout(() => {
-			window.location.href = '/map'
+			window.location.href = '#/map'
 		}, 4000)
 	}
 

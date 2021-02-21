@@ -53,30 +53,45 @@ const Dashboard = () => {
 	])
 
 	useEffect(() => {
-		let myHeaders = new Headers()
-		myHeaders.append('x-auth-token', process.env.REACT_APP_ACCESS_TOKEN)
-		console.log(tempFlightHistory)
-
-		let requestOptions = {
-			method: 'GET',
-			headers: myHeaders,
-		}
-
 		const fetchPicture = hexCode => {
-			fetch(
-				`https://api.planespotters.net/v1/photos/hex/${hexCode}`,
-				requestOptions
-			)
+			fetch(`https://aviate-backend.herokuapp.com/image/${hexCode}`)
 				.then(result => result.json())
 				.then(resJson => [
-					setPhotographer(resJson.photos[0].photographer),
-					setPicture(resJson.photos[0].thumbnail_large.src),
-					setLink(resJson.photos[0].link),
+					setPhotographer(resJson.data.photos[0].photographer),
+					setPicture(resJson.data.photos[0].thumbnail_large.src),
+					setLink(resJson.data.photos[0].link),
 				])
 				.catch(error => console.log('error', error))
 		}
 		fetchPicture(selectedTraffic[0])
 	}, [selectedTraffic])
+
+	// useEffect(() => {
+	// 	let myHeaders = new Headers()
+	// 	myHeaders.append('x-auth-token', process.env.REACT_APP_ACCESS_TOKEN)
+
+	// 	let requestOptions = {
+	// 		method: 'GET',
+	// 		headers: myHeaders,
+	// 	}
+
+	// 	const fetchPicture = hexCode => {
+	// 		console.log(hexCode)
+
+	// 		fetch(
+	// 			`https://api.planespotters.net/v1/photos/hex/${hexCode}`,
+	// 			requestOptions
+	// 		)
+	// 			.then(result => result.json())
+	// 			.then(resJson => [
+	// 				setPhotographer(resJson.photos[0].photographer),
+	// 				setPicture(resJson.photos[0].thumbnail_large.src),
+	// 				setLink(resJson.photos[0].link),
+	// 			])
+	// 			.catch(error => console.log('error', error))
+	// 	}
+	// 	fetchPicture(selectedTraffic[0])
+	// }, [selectedTraffic])
 
 	const returnUpdated = () => {
 		//here bugfix for transponder to off-position ((selectedTraffic &&  selectedTraffic[0][1] != undefined or so ))

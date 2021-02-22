@@ -1,15 +1,15 @@
 body {
 	background-color: #000;
-	overflow: hidden;
 }
 
 .intro {
 	background-image: url('../../img/fullHD/landing_1920.jpg');
-	background-position: center center;
+	background-position: center right;
 	background-size: cover;
 	height: 100vh;
 	z-index: 10;
 	position: relative;
+	overflow: hidden;
 }
 
 .intro-screen-enter {
@@ -34,14 +34,14 @@ body {
 	font-family: 'Bebas', sans-serif;
 	text-align: end;
 	position: absolute;
-	top: 40%;
+	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: rgba(0, 0, 0, 0.6);
 }
 
 .logo-box h1 {
-	font-size: 8rem;
+	font-size: 6rem;
 }
 
 .logo-box h2 {
@@ -67,12 +67,12 @@ body {
 	margin-bottom: 1rem;
 }
 
-.logo-container {
+/* .logo-container {
 	display: flex;
 	justify-content: center;
 	gap: 3rem;
 	height: 50px;
-}
+} */
 
 .setup {
 	background-image: url('../../img/fullHD/setup_1920.jpg');
@@ -87,6 +87,7 @@ body {
 	background-size: cover;
 	height: 100vh;
 	position: relative;
+	overflow: hidden;
 }
 
 .setup-screen-enter {
@@ -102,7 +103,7 @@ body {
 	font-family: 'Bebas', sans-serif;
 	text-align: center;
 	position: absolute;
-	top: 40%;
+	top: 35%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 	color: #fff;
@@ -113,11 +114,11 @@ body {
 }
 
 .setup-box h2 {
-	font-size: 5rem;
+	font-size: 4rem;
 }
 
 .upper-p {
-	font-size: 2rem;
+	font-size: 1.5rem;
 	margin: -1rem 0 1rem 0;
 }
 
@@ -161,15 +162,9 @@ body {
 	margin-bottom: 1rem;
 }
 
-.logo-container {
-	display: flex;
-	justify-content: center;
-	gap: 3rem;
-}
-
 .login-icon {
 	position: absolute;
-	transform: translate(-30vw, 50vh) rotate(90deg);
+	transform: translate(-150vw, 50vh) rotate(90deg);
 	transform-origin: center center;
 	transition: all 4s ease-in-out;
 }
@@ -200,4 +195,50 @@ body {
 
 .logo-icon-anim3 {
 	transform: translate(70vw, 100vh) rotate(180deg);
+}
+
+.logo-container {
+	height: 100px;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.logo {
+	height: 22px;
+}
+
+@media (min-width: 1200px) {
+	.intro {
+		background-position: center center;
+	}
+
+	.logo-box {
+		top: 40%;
+	}
+
+	.logo-box h1 {
+		font-size: 8rem;
+	}
+
+	.setup-box {
+		top: 40%;
+	}
+
+	.setup-box h2 {
+		font-size: 5rem;
+	}
+
+	.upper-p {
+		font-size: 2rem;
+	}
+
+	.logo-container {
+		gap: 3rem;
+		display: flex;
+		align-items: center;
+	}
+
+	.logo {
+		height: 50px;
+	}
 }

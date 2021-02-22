@@ -2,45 +2,40 @@
 	position: fixed;
 	right: 0;
 	top: 0;
-	width: 200px;
+	width: 150px;
 	background-color: rgba(0, 0, 0, 0.8);
 	z-index: 400;
-	padding: 1rem;
+	padding: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 1rem;
+	gap: 0.5rem;
 	border-radius: 2px;
 	box-shadow: 2px 2px 5px #000;
 }
 
 .menu-item {
 	width: 100%;
+	border-radius: 2px;
+	box-shadow: 2px 2px 5px #000;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border: 1px solid #fff;
 	font-family: 'Bebas';
-	font-size: 1.1rem;
+	font-size: 0.8rem;
 }
 
 .toggle-airports {
-	height: 40px;
+	height: 30px;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
 }
 
 .toggle-windmap {
-	height: 40px;
-	cursor: pointer;
-	color: #fff;
-	border-radius: 2px;
-}
-
-.toggle-compass {
-	height: 40px;
+	height: 30px;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
@@ -55,17 +50,53 @@
 }
 
 .location-input {
-	height: 40px;
+	height: 30px;
 	border: none;
 }
 
 .location-button {
-	height: 40px;
+	height: 30px;
 	cursor: pointer;
 }
 
 .timer {
 	color: #fff;
 	font-family: 'Bebas';
-	font-size: 1.5rem;
+	font-size: 1rem;
+}
+
+/*
+##############	DESKTOP-VIEW	###########
+*/
+
+@media (min-width: 1200px) {
+	.menu-container {
+		width: 200px;
+		padding: 1rem;
+		gap: 1rem;
+	}
+
+	.menu-item {
+		font-size: 1.1rem;
+	}
+
+	.toggle-airports {
+		height: 40px;
+	}
+
+	.toggle-windmap {
+		height: 40px;
+	}
+
+	.location-input {
+		height: 40px;
+	}
+
+	.location-button {
+		height: 40px;
+	}
+
+	.timer {
+		font-size: 1.5rem;
+	}
 }

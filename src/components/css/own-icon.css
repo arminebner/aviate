@@ -1,6 +1,6 @@
 .icon-container {
-	width: 100px;
-	height: 130px;
+	width: 70px;
+	height: 100px;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -8,7 +8,7 @@
 	color: #fff;
 	background-color: rgba(0, 0, 0, 0.801);
 	font-family: 'Bebas';
-	font-size: 1rem;
+	font-size: 0.7rem;
 	border-radius: 2px;
 	box-shadow: 2px 2px 5px #000;
 }
@@ -24,4 +24,12 @@
 
 .line-separator {
 	width: 85%;
+}
+
+@media (min-width: 1200px) {
+	.icon-container {
+		width: 100px;
+		height: 130px;
+		font-size: 1rem;
+	}
 }

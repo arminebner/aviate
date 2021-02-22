@@ -1,6 +1,6 @@
 .dashboard-container {
 	width: 100%;
-	height: 300px;
+	height: 350px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -18,7 +18,7 @@
 	z-index: 400;
 	transform: translateY(100%);
 	transition: all 0.5s ease-in;
-	border-top: 10px solid #000;
+	border-top: 5px solid #000;
 }
 
 .showing {
@@ -27,6 +27,7 @@
 
 .dashboard {
 	width: 100%;
+	max-width: 1500px;
 	margin: 0 auto;
 }
 
@@ -55,55 +56,82 @@
 }
 
 .dashboard-data {
-	height: 250px;
+	height: 350px;
 	display: flex;
 	color: #fff;
 	flex-direction: row;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: center;
 }
 
 .general-data {
-	height: 100%;
-	width: 100%;
+	height: 350px;
+	width: 95%;
 	display: flex;
-	gap: 3rem;
+	flex-direction: column;
+	gap: 0.5rem;
 	justify-content: center;
 	align-items: center;
+	overflow: scroll;
 }
 
 .general-data a {
 	text-decoration: none;
 }
 
+.first-row {
+	margin-top: 300px;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.first-row-buttons {
+	display: flex;
+	gap: 0.5rem;
+}
+
+.first-row-buttons a {
+	width: 50%;
+}
+
+.second-row {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 1.5rem;
+}
+
 .armin-logo {
-	font-size: 0.8rem;
+	width: 100%;
+	font-size: 0.7rem;
 	color: rgb(109, 109, 109);
-	padding: 1rem;
-	transform: rotate(-90deg);
-	margin-right: -120px;
-	background-color: #1971c91e;
-	border: 1px solid #1971c93a;
+	padding: 0.3rem;
+	background-color: #1971c94d;
+	border: 1px solid #1971c9;
 }
 
 .armin-logo img {
-	width: 150px;
+	width: 100%;
 }
 
 .aircraft-image {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 }
 
 .aircraft-image img {
-	height: 290px;
+	width: 100%;
 }
 
 .aircraft-image p {
 	margin-top: -1.5rem;
 	margin-right: 1rem;
 	align-self: flex-end;
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 }
 
 .aircraft-image a {
@@ -111,9 +139,8 @@
 }
 
 .follow-mode {
-	height: 100%;
-	writing-mode: vertical-lr;
-	padding: 1rem;
+	width: 50%;
+	padding: 0.8rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -122,11 +149,10 @@
 	border-radius: 2px;
 	border: 1px solid rgb(228, 186, 0);
 	font-family: 'Bebas';
-	font-size: 2rem;
+	font-size: 1.2rem;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
-	transform: rotate(-180deg);
-	letter-spacing: 0.5rem;
+	letter-spacing: 0.2rem;
 }
 
 .unfollow {
@@ -145,10 +171,11 @@
 }
 
 .current-position-info {
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	align-self: flex-start;
-	padding: 1rem;
+	align-self: center;
+	padding: 0.8rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
@@ -156,38 +183,56 @@
 
 .current-aircraft-info {
 	font-family: 'Bebas';
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 }
 
 .current-aircraft-headline {
 	font-family: 'Bebas';
-	font-size: 2rem;
+	font-size: 1.5rem;
 	text-decoration: underline;
 }
 
+.flight-history-button {
+	padding: 1rem;
+	gap: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 100%;
+	cursor: pointer;
+	color: #fff;
+	border-radius: 2px;
+	border: 1px solid #fff;
+	font-family: 'Bebas';
+	font-size: 1.5rem;
+	background-color: rgba(0, 0, 0, 0.7);
+	box-shadow: 2px 2px 5px #000;
+}
+
 .flight-history {
+	width: 100%;
+	min-height: 200px;
 	height: 250px;
 	display: flex;
 	flex-direction: column;
 	align-self: flex-start;
 	overflow: auto;
-	padding: 1rem;
+	padding: 0.8rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
+	text-align: center;
 }
 
 .fetch-history {
 	cursor: pointer;
 	font-family: 'Bebas';
-	font-size: 1.5rem;
+	font-size: 1rem;
 }
 
 .flights {
 	display: flex;
-}
-
-.date-location {
 }
 
 .location {
@@ -196,8 +241,8 @@
 
 .controlls-container {
 	display: flex;
-	gap: 0.5rem;
-	align-self: flex-start;
+	gap: 0.3rem;
+	align-self: center;
 }
 
 .controlls {
@@ -207,10 +252,12 @@
 	align-items: center;
 	padding: 0.5rem 0.7rem 0.5rem 0.7rem;
 	border-radius: 2px;
-	font-size: 1.3rem;
+	font-size: 1rem;
 	font-family: 'Bebas';
 	box-shadow: 2px 2px 5px #000;
 	cursor: pointer;
+	margin-bottom: 5rem;
+	margin-top: 2rem;
 }
 
 .minimize {
@@ -219,4 +266,136 @@
 
 .close {
 	background-color: red;
+}
+
+/*
+##############	DESKTOP-VIEW	###########
+*/
+
+@media (min-width: 1200px) {
+	.dashboard-container {
+		height: 300px;
+		border-top: 10px solid #000;
+	}
+
+	.dashboard-data {
+		height: 270px;
+		justify-self: center;
+		align-self: center;
+	}
+
+	.general-data {
+		height: 270px;
+		width: 95%;
+		gap: 3rem;
+		flex-direction: row;
+		overflow: hidden;
+		align-items: center;
+	}
+
+	.first-row {
+		width: 50%;
+		margin-top: 0px;
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+		justify-self: center;
+		align-self: center;
+	}
+
+	.first-row-buttons {
+		height: 250px;
+		width: 200px;
+		display: flex;
+		gap: 1rem;
+	}
+
+	.second-row {
+		width: 50%;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+	}
+
+	.armin-logo {
+		display: flex;
+		width: 250px;
+		font-size: 0.8rem;
+		padding: 1rem;
+		transform: rotate(-90deg);
+		margin-top: 88px;
+		margin-left: -80px;
+	}
+
+	.armin-logo img {
+		width: 150px;
+	}
+
+	.aircraft-image img {
+		width: 400px;
+	}
+
+	.aircraft-image p {
+		margin-top: -2.5rem;
+	}
+
+	.follow-mode {
+		padding: 1rem;
+		font-size: 2rem;
+		letter-spacing: 0.5rem;
+		transform: rotate(-180deg);
+		writing-mode: vertical-lr;
+	}
+
+	.current-position-info {
+		padding: 1rem;
+		width: 50%;
+	}
+
+	.current-aircraft-info {
+		font-size: 1.5rem;
+	}
+
+	.current-aircraft-headline {
+		font-size: 2rem;
+	}
+
+	.flight-history-button {
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 50px;
+		width: 50%;
+		cursor: pointer;
+		color: #fff;
+		border-radius: 2px;
+		border: 1px solid #fff;
+		font-family: 'Bebas';
+		font-size: 1.5rem;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+
+	.flight-history {
+		padding: 1rem;
+		width: 50%;
+	}
+
+	.fetch-history {
+		font-size: 1.5rem;
+	}
+
+	.controlls-container {
+		display: flex;
+		gap: 0.5rem;
+		align-self: flex-start;
+	}
+
+	.controlls {
+		width: 2rem;
+		padding: 0.5rem 0.7rem 0.5rem 0.7rem;
+		font-size: 1.3rem;
+		margin-bottom: 0rem;
+	}
 }

@@ -1,6 +1,6 @@
 .dashboard-container2 {
 	width: 100%;
-	height: 400px;
+	height: 350px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -69,21 +69,36 @@
 
 .general-data2 {
 	height: 350px;
+	width: 95%;
 	display: flex;
-	gap: 2.5rem;
+	flex-direction: column;
+	gap: 0.5rem;
 	align-items: center;
+	justify-content: center;
+	overflow: scroll;
 }
 
-.aircraft-image {
+.first-row-airport {
+	margin-top: 400px;
+	display: flex;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+.second-row-airport {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
 }
 
 .current-weather {
 	font-family: 'Bebas';
-	font-size: 1.5rem;
 }
 
 .current-airport-info {
-	height: 350px;
+	width: 50%;
+	height: 420px;
 	align-self: flex-start;
 	display: flex;
 	flex-direction: column;
@@ -94,31 +109,24 @@
 }
 
 .current-airport-weather {
-	height: 350px;
+	width: 50%;
+	height: 420px;
 	align-self: flex-start;
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
 }
-/* .fetch-history {
-	font-family: 'Bebas';
-	font-size: 1.5rem;
-} */
 
 .current-details {
 	font-family: 'Bebas';
-	font-size: 1.5rem;
+	font-size: 1rem;
 }
 
 .current-details-headline {
 	font-family: 'Bebas';
-	font-size: 2rem;
+	font-size: 1.5rem;
 	text-decoration: underline;
-}
-
-.date-location {
-	width: 130px;
 }
 
 .loading-spinner {
@@ -135,22 +143,25 @@
 }
 
 .arrival-history {
-	align-self: flex-start;
+	width: 100%;
 	height: 350px;
 	overflow: auto;
 	padding: 1rem;
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
+	text-align: center;
 }
 
 .arrivals {
 	display: flex;
 	flex-direction: row;
+	padding: 0.3rem;
 	gap: 1rem;
 }
 
 .departure-history {
+	width: 100%;
 	align-self: flex-start;
 	height: 350px;
 	overflow: auto;
@@ -158,11 +169,13 @@
 	border-radius: 3px;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
+	text-align: center;
 }
 
 .departures {
 	display: flex;
 	flex-direction: row;
+	padding: 0.3rem;
 	gap: 1rem;
 }
 
@@ -173,12 +186,181 @@
 	justify-content: center;
 	align-items: center;
 	height: 50px;
+	width: 100%;
 	cursor: pointer;
 	color: #fff;
 	border-radius: 2px;
 	border: 1px solid #fff;
 	font-family: 'Bebas';
-	font-size: 2rem;
+	font-size: 1.5rem;
 	background-color: rgba(0, 0, 0, 0.7);
 	box-shadow: 2px 2px 5px #000;
+}
+
+@media (min-width: 1200px) {
+	.dashboard-container2 {
+		height: 400px;
+	}
+
+	.glareshield2 {
+		width: 150px;
+		height: 50px;
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%);
+		bottom: 100%;
+		background-color: rgba(0, 0, 0, 0.7);
+		cursor: pointer;
+		color: #fff;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 2px solid #fff;
+		border-bottom: none;
+		border-radius: 2px;
+		font-family: 'Bebas';
+		font-size: 1.5rem;
+		letter-spacing: 0.3rem;
+		transform: translateY(450px);
+		transition: all 0.5s ease-in;
+		z-index: 0;
+	}
+
+	.dashboard-data2 {
+		height: 350px;
+		display: flex;
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: center;
+		color: #fff;
+	}
+
+	.general-data2 {
+		height: 350px;
+		display: flex;
+		gap: 2.5rem;
+		align-items: center;
+		flex-direction: row;
+		overflow: hidden;
+	}
+
+	.first-row-airport {
+		width: 50%;
+		margin-top: 0px;
+		gap: 1.5rem;
+	}
+
+	.second-row-airport {
+		width: 50%;
+		display: flex;
+		flex-direction: row;
+		gap: 1.5rem;
+	}
+
+	.current-weather {
+		font-family: 'Bebas';
+		font-size: 1.5rem;
+	}
+
+	.current-airport-info {
+		height: 350px;
+		align-self: flex-start;
+		display: flex;
+		flex-direction: column;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+
+	.current-airport-weather {
+		height: 350px;
+		align-self: flex-start;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+	/* .fetch-history {
+		font-family: 'Bebas';
+		font-size: 1.5rem;
+	} */
+
+	.current-details {
+		font-family: 'Bebas';
+		font-size: 1.5rem;
+	}
+
+	.current-details-headline {
+		font-family: 'Bebas';
+		font-size: 2rem;
+		text-decoration: underline;
+		text-align: center;
+	}
+
+	.date-location {
+		width: 130px;
+	}
+
+	.loading-spinner {
+		align-self: flex-start;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 350px;
+		overflow: auto;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+
+	.arrival-history {
+		width: 50%;
+		height: 350px;
+		overflow: auto;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+
+	.arrivals {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
+
+	.departure-history {
+		width: 50%;
+		height: 350px;
+		overflow: auto;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
+
+	.departures {
+		display: flex;
+		flex-direction: row;
+		gap: 1rem;
+	}
+
+	.history-button {
+		padding: 1rem;
+		gap: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 50px;
+		cursor: pointer;
+		color: #fff;
+		border-radius: 2px;
+		border: 1px solid #fff;
+		font-family: 'Bebas';
+		font-size: 2rem;
+		background-color: rgba(0, 0, 0, 0.7);
+		box-shadow: 2px 2px 5px #000;
+	}
 }

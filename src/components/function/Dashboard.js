@@ -66,33 +66,6 @@ const Dashboard = () => {
 		fetchPicture(selectedTraffic[0])
 	}, [selectedTraffic])
 
-	// useEffect(() => {
-	// 	let myHeaders = new Headers()
-	// 	myHeaders.append('x-auth-token', process.env.REACT_APP_ACCESS_TOKEN)
-
-	// 	let requestOptions = {
-	// 		method: 'GET',
-	// 		headers: myHeaders,
-	// 	}
-
-	// 	const fetchPicture = hexCode => {
-	// 		console.log(hexCode)
-
-	// 		fetch(
-	// 			`https://api.planespotters.net/v1/photos/hex/${hexCode}`,
-	// 			requestOptions
-	// 		)
-	// 			.then(result => result.json())
-	// 			.then(resJson => [
-	// 				setPhotographer(resJson.photos[0].photographer),
-	// 				setPicture(resJson.photos[0].thumbnail_large.src),
-	// 				setLink(resJson.photos[0].link),
-	// 			])
-	// 			.catch(error => console.log('error', error))
-	// 	}
-	// 	fetchPicture(selectedTraffic[0])
-	// }, [selectedTraffic])
-
 	const returnUpdated = () => {
 		//here bugfix for transponder to off-position ((selectedTraffic &&  selectedTraffic[0][1] != undefined or so ))
 		if (selectedTraffic && selectedTraffic[1] !== undefined) {
@@ -196,226 +169,238 @@ const Dashboard = () => {
 			<div className='dashboard'>
 				<div className='dashboard-data'>
 					<div className='general-data'>
-						<a
-							href='https://www.arminebner.com'
-							target='_blank'
-							rel='noreferrer'>
-							<div className='armin-logo'>
-								Avionics by:
-								<img src={arminLogo} alt='armin-logo' />
-							</div>
-						</a>
-						<div className='aircraft-image'>
-							<a href={link}>
-								<img
-									src={picture ? picture : placeholderImage}
-									alt='none available'
-									target='_blank'
-									rel='noreferrer'></img>
-							</a>
-							{picture ? (
-								<p>
-									&copy;{photographer} |{' '}
-									<a
-										href='https://www.planespotters.net/'
+						<div className='first-row'>
+							<div className='aircraft-image'>
+								<a href={link}>
+									<img
+										src={
+											picture ? picture : placeholderImage
+										}
+										alt='none available'
 										target='_blank'
-										rel='noreferrer'>
-										Planespotters.net
-									</a>
-								</p>
-							) : (
-								''
-							)}
-						</div>
-						{follow ? (
-							<p
-								onClick={e => setFollow(false)}
-								className='follow-mode unfollow'>
-								unfollow
-							</p>
-						) : (
-							<p
-								onClick={e => setFollow(true)}
-								className='follow-mode follow'>
-								follow me!
-							</p>
-						)}
-						<div className='current-position-info'>
-							<p>
-								<span className='current-aircraft-headline'>
-									Callsign: {returnUpdated()[0][1]}
-								</span>
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Origin:{' '}
-								</span>
-								{returnUpdated()[0][2]}
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Speed Knts:{' '}
-								</span>{' '}
-								{(returnUpdated()[0][9] * 1.944).toFixed(2)}{' '}
-								Knots
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Speed Kmh:{' '}
-								</span>{' '}
-								{(returnUpdated()[0][9] * 3.6).toFixed(2)} Km/h
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Altitude ft:{' '}
-								</span>{' '}
-								{returnUpdated()[0][13]
-									? `${(
-											returnUpdated()[0][13] * 3.281
-									  ).toFixed(2)} feet`
-									: 'on ground'}
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Altitude m:{' '}
-								</span>{' '}
-								{returnUpdated()[0][13]
-									? `${returnUpdated()[0][13]} m`
-									: 'on ground'}
-							</p>
-							<p>
-								<span className='current-aircraft-info'>
-									Track:{' '}
-								</span>
-								{Math.ceil(returnUpdated()[0][10])} degrees
-							</p>
-						</div>
-						{!showFlightHistory ? (
-							<div
-								className='history-button'
-								onClick={e =>
-									fetchHistory(returnUpdated()[0][0])
-								}>
-								Flight History
-							</div>
-						) : (
-							<div className='flight-history'>
-								<p className='fetch-history'>
-									<span className='current-aircraft-headline'>
-										Flight-History (last 3 days)
-									</span>
-								</p>
-								{!flightHistory ? (
-									<>
-										<div className='loading-spinner'>
-											<img
-												src={loader}
-												alt='loading-spinner'
-											/>
-										</div>
-										<div className='prefilled-flights'>
-											{tempFlightHistory.map(item => (
-												<div className='flights'>
-													<div className='date-location'>
-														<p>
-															FROM:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estDepartureAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estDepartureAirport
-																}
-															</span>
-														</p>
-														<p>
-															@
-															{new Date(
-																item.firstSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-													<div className='date-location'>
-														<p>
-															TO:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estArrivalAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estArrivalAirport
-																}
-															</span>
-														</p>
-														<p>
-															{new Date(
-																item.lastSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-												</div>
-											))}
-										</div>
-									</>
+										rel='noreferrer'></img>
+								</a>
+								{picture ? (
+									<p>
+										&copy;{photographer} |{' '}
+										<a
+											href='https://www.planespotters.net/'
+											target='_blank'
+											rel='noreferrer'>
+											Planespotters.net
+										</a>
+									</p>
 								) : (
-									flightHistory.map(flight => (
-										<div className='flights'>
-											<div className='date-location'>
-												<p>
-													FROM:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estDepartureAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estDepartureAirport
-														}
-													</span>
-												</p>
-												<p>
-													@
-													{new Date(
-														flight.firstSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-											<div className='date-location'>
-												<p>
-													TO:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estArrivalAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estArrivalAirport
-														}
-													</span>
-												</p>
-												<p>
-													{new Date(
-														flight.lastSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-										</div>
-									))
+									''
 								)}
 							</div>
-						)}
+							<div className='first-row-buttons'>
+								<a
+									href='https://www.arminebner.com'
+									target='_blank'
+									rel='noreferrer'>
+									<div className='armin-logo'>
+										Avionics by:
+										<img src={arminLogo} alt='armin-logo' />
+									</div>
+								</a>
+								{follow ? (
+									<p
+										onClick={e => setFollow(false)}
+										className='follow-mode unfollow'>
+										unfollow
+									</p>
+								) : (
+									<p
+										onClick={e => setFollow(true)}
+										className='follow-mode follow'>
+										follow me!
+									</p>
+								)}
+							</div>
+						</div>
+						<div className='second-row'>
+							<div className='current-position-info'>
+								<p>
+									<span className='current-aircraft-headline'>
+										Callsign: {returnUpdated()[0][1]}
+									</span>
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Origin:{' '}
+									</span>
+									{returnUpdated()[0][2]}
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Speed Knts:{' '}
+									</span>{' '}
+									{(returnUpdated()[0][9] * 1.944).toFixed(2)}{' '}
+									Knots
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Speed Kmh:{' '}
+									</span>{' '}
+									{(returnUpdated()[0][9] * 3.6).toFixed(2)}{' '}
+									Km/h
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Altitude ft:{' '}
+									</span>{' '}
+									{returnUpdated()[0][13]
+										? `${(
+												returnUpdated()[0][13] * 3.281
+										  ).toFixed(2)} feet`
+										: 'on ground'}
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Altitude m:{' '}
+									</span>{' '}
+									{returnUpdated()[0][13]
+										? `${returnUpdated()[0][13]} m`
+										: 'on ground'}
+								</p>
+								<p>
+									<span className='current-aircraft-info'>
+										Track:{' '}
+									</span>
+									{Math.ceil(returnUpdated()[0][10])} degrees
+								</p>
+							</div>
+							{!showFlightHistory ? (
+								<div
+									className='flight-history-button'
+									onClick={e =>
+										fetchHistory(returnUpdated()[0][0])
+									}>
+									Flight History
+								</div>
+							) : (
+								<div className='flight-history'>
+									<p className='fetch-history'>
+										<span className='current-aircraft-headline'>
+											Flight-History
+										</span>
+									</p>
+									{!flightHistory ? (
+										<>
+											<div className='loading-spinner'>
+												<img
+													src={loader}
+													alt='loading-spinner'
+												/>
+											</div>
+											<div className='prefilled-flights'>
+												{tempFlightHistory.map(item => (
+													<div className='flights'>
+														<div className='date-location'>
+															<p>
+																FROM:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estDepartureAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estDepartureAirport
+																	}
+																</span>
+															</p>
+															<p>
+																@
+																{new Date(
+																	item.firstSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+														<div className='date-location'>
+															<p>
+																TO:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estArrivalAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estArrivalAirport
+																	}
+																</span>
+															</p>
+															<p>
+																{new Date(
+																	item.lastSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+													</div>
+												))}
+											</div>
+										</>
+									) : (
+										flightHistory.map(flight => (
+											<div className='flights'>
+												<div className='date-location'>
+													<p>
+														FROM:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estDepartureAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estDepartureAirport
+															}
+														</span>
+													</p>
+													<p>
+														@
+														{new Date(
+															flight.firstSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+												<div className='date-location'>
+													<p>
+														TO:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estArrivalAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estArrivalAirport
+															}
+														</span>
+													</p>
+													<p>
+														{new Date(
+															flight.lastSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+											</div>
+										))
+									)}
+								</div>
+							)}
+						</div>
+
 						<div className='controlls-container'>
 							<div
 								onClick={maximizeHandler}

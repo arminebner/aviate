@@ -190,352 +190,375 @@ const DashboardAirport = () => {
 			<div className='dashboard2'>
 				<div className='dashboard-data2'>
 					<div className='general-data2'>
-						<div className='current-airport-info'>
-							<p>
-								<span className='current-details-headline'>
-									Current Airport
-								</span>
-							</p>
-							<p>
-								<span className='current-details'>Name: </span>
-								{airport.name}
-							</p>
-							<p>
-								<span className='current-details'>City: </span>
-								{airport.city}
-							</p>
-							<p>
-								<span className='current-details'>
-									Country:{' '}
-								</span>
-								{airport.country}
-							</p>
-							<p>
-								<span className='current-details'>
-									Icao-Code:{' '}
-								</span>
-								{airport.icao}
-							</p>
-							<p>
-								<span className='current-details'>
-									Iata-Code:{' '}
-								</span>
-								{airport.iata}
-							</p>
-							<p>
-								<span className='current-details'>
-									Altitude:{' '}
-								</span>{' '}
-								{(airport.altitude / 3.28084).toFixed(0)} m
-							</p>
-						</div>
-						<div className='current-airport-weather'>
-							<p>
-								<span className='current-details-headline'>
-									Current Weather{' '}
-								</span>
-							</p>
-							<img
-								src={`http://openweathermap.org/img/wn/${
-									returnUpdated().weather[0].icon
-								}@2x.png`}
-								alt='weather-indicator-icon'
-							/>
-							<p>
-								<span className='current-details'>
-									Description:{' '}
-								</span>{' '}
-								{returnUpdated().weather[0].description}
-							</p>
-							<p>
-								<span className='current-details'>
-									Temperature:{' '}
-								</span>
-								{returnUpdated().main.temp} °C
-							</p>
-							<p>
-								<span className='current-details'>
-									Feels like:{' '}
-								</span>
-								{returnUpdated().main.feels_like} °C
-							</p>
-							<p>
-								<span className='current-details'>
-									Airpressure:{' '}
-								</span>
-								{returnUpdated().main.pressure} hPa
-							</p>
-							<p>
-								<span className='current-details'>
-									Visibility:{' '}
-								</span>
-								{returnUpdated().visibility}
-							</p>
-							<p>
-								<span className='current-details'>Wind: </span>
-								{returnUpdated().wind.speed} m/s{' '}
-								{returnUpdated().wind.deg} deg
-							</p>
-						</div>
-						{!showArrHistory ? (
-							<div
-								className='history-button'
-								onClick={e => fetchArrHistory(airport.icao)}>
-								<img src={arrivalIcon} alt='arrival-icon' />
-								Arrival History
-							</div>
-						) : (
-							<div className='arrival-history'>
-								<p className='current-details-headline'>
-									Arrival-History
+						<div className='first-row-airport'>
+							<div className='current-airport-info'>
+								<p>
+									<span className='current-details-headline'>
+										Current Airport
+									</span>
 								</p>
-								{!arrHistory ? (
-									<>
-										<div className='loading-spinner'>
-											<img
-												src={loader}
-												alt='loading-spinner'
-											/>
-										</div>
-										<div className='prefilledHistory'>
-											{tempHistory.map(item => (
-												<div className='arrivals'>
-													<p>{item.callsign}</p>
-													<div className='date-location'>
-														<p>
-															FROM:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estDepartureAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estDepartureAirport
-																}
-															</span>
-														</p>
-														<p>
-															@
-															{new Date(
-																item.firstSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-													<div className='date-location'>
-														<p>
-															TO:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estArrivalAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estArrivalAirport
-																}
-															</span>
-														</p>
-														<p>
-															{new Date(
-																item.lastSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-												</div>
-											))}
-										</div>
-									</>
-								) : (
-									arrHistory.map(flight => (
-										<div className='arrivals'>
-											<p>{flight.callsign}</p>
-											<div className='date-location'>
-												<p>
-													FROM:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estDepartureAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estDepartureAirport
-														}
-													</span>
-												</p>
-												<p>
-													@
-													{new Date(
-														flight.firstSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-											<div className='date-location'>
-												<p>
-													TO:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estArrivalAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estArrivalAirport
-														}
-													</span>
-												</p>
-												<p>
-													{new Date(
-														flight.lastSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-										</div>
-									))
-								)}
-							</div>
-						)}
-						{!showDepHistory ? (
-							<div
-								className='history-button'
-								onClick={e => fetchDepHistory(airport.icao)}>
-								<img src={departureIcon} alt='departure-icon' />
-								Departure History
-							</div>
-						) : (
-							<div className='departure-history'>
-								<p className='current-details-headline'>
-									Departure-History
+								<p>
+									<span className='current-details'>
+										Name:{' '}
+									</span>
+									{airport.name}
 								</p>
-								{!depHistory ? (
-									<>
-										<div className='loading-spinner'>
-											<img
-												src={loader}
-												alt='loading-spinner'
-											/>
-										</div>
-										<div className='prefilledHistory'>
-											{tempHistory.map(item => (
-												<div className='arrivals'>
-													<p>{item.callsign}</p>
-													<div className='date-location'>
-														<p>
-															FROM:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estDepartureAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estDepartureAirport
-																}
-															</span>
-														</p>
-														<p>
-															@
-															{new Date(
-																item.firstSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-													<div className='date-location'>
-														<p>
-															TO:{' '}
-															<span
-																onClick={e =>
-																	changeLocation(
-																		item.estArrivalAirport
-																	)
-																}
-																className='location'>
-																{
-																	item.estArrivalAirport
-																}
-															</span>
-														</p>
-														<p>
-															{new Date(
-																item.lastSeen *
-																	1000
-															).toLocaleDateString()}
-														</p>
-													</div>
-												</div>
-											))}
-										</div>
-									</>
-								) : (
-									depHistory.map(flight => (
-										<div className='departures'>
-											<p>{flight.callsign} </p>
-											<div className='date-location'>
-												<p>
-													FROM:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estDepartureAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estDepartureAirport
-														}
-													</span>
-												</p>
-												<p>
-													@
-													{new Date(
-														flight.firstSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-											<div className='date-location'>
-												<p>
-													TO:{' '}
-													<span
-														onClick={e =>
-															changeLocation(
-																flight.estArrivalAirport
-															)
-														}
-														className='location'>
-														{
-															flight.estArrivalAirport
-														}
-													</span>
-												</p>
-												<p>
-													{new Date(
-														flight.lastSeen * 1000
-													).toLocaleDateString()}
-												</p>
-											</div>
-										</div>
-									))
-								)}
+								<p>
+									<span className='current-details'>
+										City:{' '}
+									</span>
+									{airport.city}
+								</p>
+								<p>
+									<span className='current-details'>
+										Country:{' '}
+									</span>
+									{airport.country}
+								</p>
+								<p>
+									<span className='current-details'>
+										Icao-Code:{' '}
+									</span>
+									{airport.icao}
+								</p>
+								<p>
+									<span className='current-details'>
+										Iata-Code:{' '}
+									</span>
+									{airport.iata}
+								</p>
+								<p>
+									<span className='current-details'>
+										Altitude:{' '}
+									</span>{' '}
+									{(airport.altitude / 3.28084).toFixed(0)} m
+								</p>
 							</div>
-						)}
-					</div>
-					<div className='controlls-container'>
-						<div
-							onClick={maximizeHandler}
-							className='controlls minimize'>
-							__
+							<div className='current-airport-weather'>
+								<p>
+									<span className='current-details-headline'>
+										Current Weather{' '}
+									</span>
+								</p>
+								<img
+									src={`http://openweathermap.org/img/wn/${
+										returnUpdated().weather[0].icon
+									}@2x.png`}
+									alt='weather-indicator-icon'
+								/>
+								<p>
+									<span className='current-details'>
+										Description:{' '}
+									</span>{' '}
+									{returnUpdated().weather[0].description}
+								</p>
+								<p>
+									<span className='current-details'>
+										Temperature:{' '}
+									</span>
+									{returnUpdated().main.temp} °C
+								</p>
+								<p>
+									<span className='current-details'>
+										Feels like:{' '}
+									</span>
+									{returnUpdated().main.feels_like} °C
+								</p>
+								<p>
+									<span className='current-details'>
+										Airpressure:{' '}
+									</span>
+									{returnUpdated().main.pressure} hPa
+								</p>
+								<p>
+									<span className='current-details'>
+										Visibility:{' '}
+									</span>
+									{returnUpdated().visibility}
+								</p>
+								<p>
+									<span className='current-details'>
+										Wind:{' '}
+									</span>
+									{returnUpdated().wind.speed} m/s{' '}
+									{returnUpdated().wind.deg} deg
+								</p>
+							</div>
 						</div>
-						<div onClick={closeHandler} className='controlls close'>
-							X
+						<div className='second-row-airport'>
+							{!showArrHistory ? (
+								<div
+									className='history-button'
+									onClick={e =>
+										fetchArrHistory(airport.icao)
+									}>
+									<img src={arrivalIcon} alt='arrival-icon' />
+									Arrival History
+								</div>
+							) : (
+								<div className='arrival-history'>
+									<p className='current-details-headline'>
+										Arrival-History
+									</p>
+									{!arrHistory ? (
+										<>
+											<div className='loading-spinner'>
+												<img
+													src={loader}
+													alt='loading-spinner'
+												/>
+											</div>
+											<div className='prefilledHistory'>
+												{tempHistory.map(item => (
+													<div className='arrivals'>
+														<p>{item.callsign}</p>
+														<div className='date-location'>
+															<p>
+																FROM:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estDepartureAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estDepartureAirport
+																	}
+																</span>
+															</p>
+															<p>
+																@
+																{new Date(
+																	item.firstSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+														<div className='date-location'>
+															<p>
+																TO:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estArrivalAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estArrivalAirport
+																	}
+																</span>
+															</p>
+															<p>
+																{new Date(
+																	item.lastSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+													</div>
+												))}
+											</div>
+										</>
+									) : (
+										arrHistory.map(flight => (
+											<div className='arrivals'>
+												<p>{flight.callsign}</p>
+												<div className='date-location'>
+													<p>
+														FROM:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estDepartureAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estDepartureAirport
+															}
+														</span>
+													</p>
+													<p>
+														@
+														{new Date(
+															flight.firstSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+												<div className='date-location'>
+													<p>
+														TO:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estArrivalAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estArrivalAirport
+															}
+														</span>
+													</p>
+													<p>
+														{new Date(
+															flight.lastSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+											</div>
+										))
+									)}
+								</div>
+							)}
+							{!showDepHistory ? (
+								<div
+									className='history-button'
+									onClick={e =>
+										fetchDepHistory(airport.icao)
+									}>
+									<img
+										src={departureIcon}
+										alt='departure-icon'
+									/>
+									Departure History
+								</div>
+							) : (
+								<div className='departure-history'>
+									<p className='current-details-headline'>
+										Departure-History
+									</p>
+									{!depHistory ? (
+										<>
+											<div className='loading-spinner'>
+												<img
+													src={loader}
+													alt='loading-spinner'
+												/>
+											</div>
+											<div className='prefilledHistory'>
+												{tempHistory.map(item => (
+													<div className='arrivals'>
+														<p>{item.callsign}</p>
+														<div className='date-location'>
+															<p>
+																FROM:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estDepartureAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estDepartureAirport
+																	}
+																</span>
+															</p>
+															<p>
+																@
+																{new Date(
+																	item.firstSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+														<div className='date-location'>
+															<p>
+																TO:{' '}
+																<span
+																	onClick={e =>
+																		changeLocation(
+																			item.estArrivalAirport
+																		)
+																	}
+																	className='location'>
+																	{
+																		item.estArrivalAirport
+																	}
+																</span>
+															</p>
+															<p>
+																{new Date(
+																	item.lastSeen *
+																		1000
+																).toLocaleDateString()}
+															</p>
+														</div>
+													</div>
+												))}
+											</div>
+										</>
+									) : (
+										depHistory.map(flight => (
+											<div className='departures'>
+												<p>{flight.callsign} </p>
+												<div className='date-location'>
+													<p>
+														FROM:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estDepartureAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estDepartureAirport
+															}
+														</span>
+													</p>
+													<p>
+														@
+														{new Date(
+															flight.firstSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+												<div className='date-location'>
+													<p>
+														TO:{' '}
+														<span
+															onClick={e =>
+																changeLocation(
+																	flight.estArrivalAirport
+																)
+															}
+															className='location'>
+															{
+																flight.estArrivalAirport
+															}
+														</span>
+													</p>
+													<p>
+														{new Date(
+															flight.lastSeen *
+																1000
+														).toLocaleDateString()}
+													</p>
+												</div>
+											</div>
+										))
+									)}
+								</div>
+							)}
+						</div>
+						<div className='controlls-container'>
+							<div
+								onClick={maximizeHandler}
+								className='controlls minimize'>
+								__
+							</div>
+							<div
+								onClick={closeHandler}
+								className='controlls close'>
+								X
+							</div>
 						</div>
 					</div>
 				</div>

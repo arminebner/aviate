@@ -108,18 +108,22 @@ const Landing = () => {
 							<h3>powered by</h3>
 							<div className='logo-container'>
 								<img
+									className=' logo'
 									src={OpenSkyLogo}
 									alt='logo from open sky network'
 								/>
 								<img
+									className='logo'
 									src={PlanespottersLogo}
 									alt='logo from planespotters.net'
 								/>
 								<img
+									className='logo'
 									src={OpenWeatherLogo}
 									alt='logo from openweathermap'
 								/>
 								<img
+									className='logo'
 									src={MeteoblueLogo}
 									alt='logo from meteoblue.net'
 								/>
@@ -180,18 +184,22 @@ const Landing = () => {
 							<h3>powered by</h3>
 							<div className='logo-container'>
 								<img
+									className=' logo'
 									src={OpenSkyLogo}
 									alt='logo from open sky network'
 								/>
 								<img
+									className='logo'
 									src={PlanespottersLogo}
 									alt='logo from planespotters.net'
 								/>
 								<img
+									className='logo'
 									src={OpenWeatherLogo}
 									alt='logo from openweathermap'
 								/>
 								<img
+									className='logo'
 									src={MeteoblueLogo}
 									alt='logo from meteoblue.net'
 								/>
